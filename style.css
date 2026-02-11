@@ -300,15 +300,272 @@ h1 .accent {
   margin-top: 0.3rem;
 }
 
-/* highlight specific stats */
-.stat-card:nth-child(1) .stat-value {
-  color: var(--accent);
-}
-.stat-card:nth-child(2) .stat-value {
+/* Impact stats get accent colors */
+.stat-impact:nth-child(1) .stat-value {
   color: var(--accent2);
 }
-.stat-card:nth-child(3) .stat-value {
+.stat-impact:nth-child(2) .stat-value {
+  color: var(--accent);
+}
+.stat-impact:nth-child(3) .stat-value {
   color: var(--accent3);
+}
+.stat-price .stat-value {
+  color: var(--text-bright);
+}
+
+.stat-equiv {
+  font-size: 0.7rem;
+  color: var(--text-dim);
+  margin-top: 0.25rem;
+  font-style: italic;
+}
+
+/* ---------- Price Gap Visual ---------- */
+#price-gap-section {
+  margin-bottom: 3rem;
+}
+
+.price-gap-bar {
+  display: flex;
+  height: 48px;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 0.5rem;
+}
+
+.price-gap-raw {
+  background: var(--accent2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 50px;
+  transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.price-gap-rest {
+  background: rgba(0, 0, 0, 0.06);
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.price-gap-label-inner {
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.price-gap-raw .price-gap-label-inner {
+  color: #fff;
+}
+
+.price-gap-rest .price-gap-label-inner {
+  color: var(--text-dim);
+}
+
+.price-gap-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.72rem;
+  color: var(--text-dim);
+}
+
+/* ---------- Environmental Footprint ---------- */
+#eco-footprint-section {
+  margin-bottom: 3.5rem;
+}
+
+#eco-footprint {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+#eco-footprint h4 {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-bright);
+  margin-bottom: 0.8rem;
+}
+
+.eco-bar-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 5px;
+}
+
+.eco-bar-label {
+  width: 120px;
+  flex-shrink: 0;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text);
+  text-align: right;
+}
+
+.eco-bar-track {
+  flex: 1;
+  height: 14px;
+  background: rgba(0, 0, 0, 0.04);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.eco-bar-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  min-width: 2px;
+}
+
+.eco-bar-value {
+  width: 55px;
+  flex-shrink: 0;
+  font-size: 0.72rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-dim);
+  text-align: right;
+}
+
+@media (max-width: 800px) {
+  #eco-footprint {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---------- Compare CTA ---------- */
+#compare-cta {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+#compare-btn {
+  background: var(--text-bright);
+  color: #fff;
+  border: none;
+  border-radius: 99px;
+  padding: 0.9rem 2.4rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+#compare-btn:hover {
+  background: var(--accent);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(13, 148, 136, 0.25);
+}
+
+/* ---------- Compare View ---------- */
+#compare {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem 2rem 4rem;
+}
+
+#compare-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-size: 0.85rem;
+  font-weight: 500;
+  border-radius: 99px;
+  padding: 0.5rem 1.2rem 0.5rem 0.8rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-bottom: 2rem;
+}
+
+#compare-back-btn:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.compare-title {
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--text-bright);
+  margin-bottom: 0.5rem;
+}
+
+.compare-subtitle {
+  margin-bottom: 2.5rem;
+}
+
+#compare-charts {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.cmp-chart h3 {
+  margin-bottom: 0.8rem;
+}
+
+.cmp-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+  padding: 3px 0;
+}
+
+.cmp-highlight {
+  font-weight: 600;
+}
+
+.cmp-label {
+  width: 120px;
+  flex-shrink: 0;
+  font-size: 0.78rem;
+  text-align: right;
+  color: var(--text);
+}
+
+.cmp-highlight .cmp-label {
+  color: var(--text-bright);
+  font-weight: 700;
+}
+
+.cmp-track {
+  flex: 1;
+  height: 18px;
+  background: rgba(0, 0, 0, 0.03);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.cmp-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  min-width: 2px;
+}
+
+.cmp-value {
+  width: 70px;
+  flex-shrink: 0;
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-dim);
+  text-align: right;
+}
+
+.cmp-highlight .cmp-value {
+  color: var(--text-bright);
+  font-weight: 600;
+}
+
+#compare.entering {
+  animation: fadeInUp 0.45s ease forwards;
 }
 
 /* ---------- Composition Section ---------- */
@@ -853,5 +1110,19 @@ h3 {
 
   #country-list {
     grid-template-columns: 1fr;
+  }
+
+  .eco-bar-label {
+    width: 80px;
+    font-size: 0.68rem;
+  }
+
+  .cmp-label {
+    width: 85px;
+    font-size: 0.7rem;
+  }
+
+  #compare {
+    padding: 1.5rem 1.2rem 3rem;
   }
 }

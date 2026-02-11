@@ -1,5 +1,5 @@
 // ============================================================
-// iPhone Minerals — Application Logic
+// iPhone Minerals — Application Logic (v2: Impact-first)
 // ============================================================
 import { materials, phones, insights } from "./data.js";
 
@@ -13,6 +13,8 @@ let currentPhone = null;
 document.addEventListener("DOMContentLoaded", () => {
   renderPhoneGrid();
   $("#back-btn").addEventListener("click", showSelector);
+  $("#compare-btn").addEventListener("click", showCompare);
+  $("#compare-back-btn").addEventListener("click", showDetail);
 });
 
 // ============================================================
@@ -37,7 +39,7 @@ function renderPhoneGrid() {
 }
 
 // ============================================================
-// Navigation
+// Navigation — 3 views: hero, detail, compare
 // ============================================================
 function selectPhone(id) {
   currentPhone = phones.find((p) => p.id === id);
@@ -48,6 +50,7 @@ function selectPhone(id) {
   setTimeout(() => {
     hero.classList.add("hidden");
     hero.classList.remove("leaving");
+    $("#compare").classList.add("hidden");
     const detail = $("#detail");
     detail.classList.remove("hidden");
     detail.classList.add("entering");
@@ -58,10 +61,66 @@ function selectPhone(id) {
 }
 
 function showSelector() {
+  $("#detail").classList.add("hidden");
+  $("#compare").classList.add("hidden");
+  $("#hero").classList.remove("hidden");
+}
+
+function showCompare() {
+  $("#detail").classList.add("hidden");
+  const compare = $("#compare");
+  compare.classList.remove("hidden");
+  compare.classList.add("entering");
+  renderCompareView();
+  window.scrollTo({ top: 0 });
+  setTimeout(() => compare.classList.remove("entering"), 500);
+}
+
+function showDetail() {
+  $("#compare").classList.add("hidden");
   const detail = $("#detail");
-  detail.classList.add("hidden");
-  const hero = $("#hero");
-  hero.classList.remove("hidden");
+  detail.classList.remove("hidden");
+  window.scrollTo({ top: 0 });
+}
+
+// ============================================================
+// Helpers
+// ============================================================
+function computePhoneStats(phone) {
+  let rawCost = 0;
+  let totalWater = 0;
+  let totalCo2Materials = 0;
+  const countrySet = new Set();
+
+  phone.materials.forEach((m) => {
+    const info = materials[m.id];
+    if (!info) return;
+    const kg = m.grams / 1000;
+    rawCost += info.pricePerKg * kg;
+    totalWater += info.eco.waterPerKg * kg;
+    totalCo2Materials += info.eco.co2PerKg * kg;
+    info.sources.forEach((s) => countrySet.add(s.country));
+  });
+
+  return { rawCost, totalWater, totalCo2Materials, countries: countrySet.size };
+}
+
+function animateValue(id, target, fmt) {
+  const el = $(`#${id}`);
+  if (!el) return;
+  const duration = 800;
+  const start = performance.now();
+  const step = (ts) => {
+    const t = Math.min((ts - start) / duration, 1);
+    const ease = 1 - Math.pow(1 - t, 3);
+    el.textContent = fmt(target * ease);
+    if (t < 1) requestAnimationFrame(step);
+  };
+  requestAnimationFrame(step);
+}
+
+function fmtNum(n) {
+  return n >= 100 ? Math.round(n).toLocaleString() : n.toFixed(1);
 }
 
 // ============================================================
@@ -70,10 +129,12 @@ function showSelector() {
 function renderDetail() {
   renderHeader();
   renderStats();
+  renderPriceGap();
+  renderEcoFootprint();
+  renderSupplyChain();
   renderDonut();
   renderBars();
   renderMaterialCards();
-  renderSupplyChain();
   renderInsights();
 }
 
@@ -86,42 +147,122 @@ function renderHeader() {
   $("#phone-weight").textContent = currentPhone.weight + "g";
 }
 
-// -------------------- Stats --------------------
+// -------------------- Stats (impact-first) --------------------
 function renderStats() {
-  const mats = currentPhone.materials;
-  let rawCost = 0;
-  let totalWater = 0;
-  const countrySet = new Set();
+  const stats = computePhoneStats(currentPhone);
 
-  mats.forEach((m) => {
-    const info = materials[m.id];
-    if (!info) return;
-    const kg = m.grams / 1000;
-    rawCost += info.pricePerKg * kg;
-    totalWater += info.eco.waterPerKg * kg;
-    info.sources.forEach((s) => countrySet.add(s.country));
-  });
-
-  animateValue("stat-raw-cost", rawCost, (v) => "$" + v.toFixed(2));
-  animateValue("stat-retail", currentPhone.retailPrice, (v) => "$" + Math.round(v));
-  const markup = currentPhone.retailPrice / rawCost;
-  animateValue("stat-markup", markup, (v) => Math.round(v) + "x");
+  // CO₂
   animateValue("stat-co2", currentPhone.carbonFootprint, (v) => Math.round(v));
-  animateValue("stat-water", totalWater, (v) => Math.round(v).toLocaleString());
-  animateValue("stat-countries", countrySet.size, (v) => Math.round(v));
+  const miles = Math.round(currentPhone.carbonFootprint * 2.3);
+  $("#stat-co2-equiv").textContent = `≈ ${miles} miles driven`;
+
+  // Water
+  animateValue("stat-water", stats.totalWater, (v) =>
+    Math.round(v).toLocaleString()
+  );
+  const bathtubs = (stats.totalWater / 300).toFixed(1);
+  $("#stat-water-equiv").textContent = `≈ ${bathtubs} bathtubs`;
+
+  // Countries
+  animateValue("stat-countries", stats.countries, (v) => Math.round(v));
+  $("#stat-countries-equiv").textContent = "across 6 continents";
+
+  // Raw cost
+  animateValue("stat-raw-cost", stats.rawCost, (v) => "$" + v.toFixed(2));
+  $("#stat-raw-equiv").textContent = "total raw materials";
+
+  // Retail
+  animateValue("stat-retail", currentPhone.retailPrice, (v) =>
+    "$" + Math.round(v)
+  );
+  $("#stat-retail-equiv").textContent = "at launch";
+
+  // Markup
+  const markup = currentPhone.retailPrice / stats.rawCost;
+  animateValue("stat-markup", markup, (v) => Math.round(v) + "x");
+  $("#stat-markup-equiv").textContent = "materials → retail";
 }
 
-function animateValue(id, target, fmt) {
-  const el = $(`#${id}`);
-  const duration = 800;
-  const start = performance.now();
-  const step = (ts) => {
-    const t = Math.min((ts - start) / duration, 1);
-    const ease = 1 - Math.pow(1 - t, 3);
-    el.textContent = fmt(target * ease);
-    if (t < 1) requestAnimationFrame(step);
-  };
-  requestAnimationFrame(step);
+// -------------------- Price Gap Visual --------------------
+function renderPriceGap() {
+  const stats = computePhoneStats(currentPhone);
+  const retail = currentPhone.retailPrice;
+  const raw = stats.rawCost;
+  const rawPct = Math.max((raw / retail) * 100, 0.5); // min 0.5% so it's visible
+
+  $("#price-gap").innerHTML = `
+    <div class="price-gap-bar">
+      <div class="price-gap-raw" style="width:${rawPct}%">
+        <span class="price-gap-label-inner">$${raw.toFixed(2)}</span>
+      </div>
+      <div class="price-gap-rest">
+        <span class="price-gap-label-inner">$${(retail - raw).toFixed(0)}</span>
+      </div>
+    </div>
+    <div class="price-gap-labels">
+      <span>Raw Materials</span>
+      <span>R&amp;D, Manufacturing, Software, Marketing, Logistics, Profit</span>
+    </div>`;
+}
+
+// -------------------- Environmental Footprint --------------------
+function renderEcoFootprint() {
+  const mats = currentPhone.materials;
+
+  // Calculate CO₂ and water per material
+  const ecoData = mats
+    .map((m) => {
+      const info = materials[m.id];
+      if (!info) return null;
+      const kg = m.grams / 1000;
+      return {
+        id: m.id,
+        name: info.name,
+        color: info.color,
+        co2: info.eco.co2PerKg * kg,
+        water: info.eco.waterPerKg * kg,
+      };
+    })
+    .filter(Boolean);
+
+  // CO₂ bars (sorted by CO₂ desc)
+  const byCo2 = [...ecoData].sort((a, b) => b.co2 - a.co2);
+  const maxCo2 = byCo2[0]?.co2 || 1;
+  $("#eco-co2-bars").innerHTML = byCo2
+    .map(
+      (d) => `
+    <div class="eco-bar-row">
+      <span class="eco-bar-label">${d.name}</span>
+      <div class="eco-bar-track">
+        <div class="eco-bar-fill" style="width:0%;background:${d.color}" data-target="${(d.co2 / maxCo2) * 100}"></div>
+      </div>
+      <span class="eco-bar-value">${d.co2 >= 0.01 ? d.co2.toFixed(2) : d.co2.toFixed(4)}</span>
+    </div>`
+    )
+    .join("");
+
+  // Water bars (sorted by water desc)
+  const byWater = [...ecoData].sort((a, b) => b.water - a.water);
+  const maxWater = byWater[0]?.water || 1;
+  $("#eco-water-bars").innerHTML = byWater
+    .map(
+      (d) => `
+    <div class="eco-bar-row">
+      <span class="eco-bar-label">${d.name}</span>
+      <div class="eco-bar-track">
+        <div class="eco-bar-fill" style="width:0%;background:${d.color}" data-target="${(d.water / maxWater) * 100}"></div>
+      </div>
+      <span class="eco-bar-value">${fmtNum(d.water)}</span>
+    </div>`
+    )
+    .join("");
+
+  // Animate all eco bars in
+  requestAnimationFrame(() => {
+    document.querySelectorAll("#eco-footprint .eco-bar-fill").forEach((bar) => {
+      bar.style.width = bar.dataset.target + "%";
+    });
+  });
 }
 
 // -------------------- Donut Chart --------------------
@@ -131,11 +272,8 @@ function renderDonut() {
   const mats = currentPhone.materials;
   const totalGrams = mats.reduce((s, m) => s + m.grams, 0);
 
-  // Circumference for r=86
   const r = 86;
   const C = 2 * Math.PI * r;
-
-  // Sort by grams descending
   const sorted = [...mats].sort((a, b) => b.grams - a.grams);
 
   let offset = 0;
@@ -167,14 +305,13 @@ function renderDonut() {
   svg.innerHTML = circles.join("");
   legend.innerHTML = legendItems.join("");
 
-  // Center text default
   $("#donut-center-value").textContent = totalGrams.toFixed(1) + "g";
   $("#donut-center-label").textContent = "Total Weight";
 
-  // Hover interactivity
   svg.querySelectorAll("circle").forEach((c) => {
     c.addEventListener("mouseenter", () => {
-      $("#donut-center-value").textContent = parseFloat(c.dataset.grams).toFixed(2) + "g";
+      $("#donut-center-value").textContent =
+        parseFloat(c.dataset.grams).toFixed(2) + "g";
       const info = materials[c.dataset.id];
       $("#donut-center-label").textContent =
         info.name + " · " + c.dataset.pct + "%";
@@ -211,17 +348,17 @@ function renderBars() {
     })
     .join("");
 
-  // Animate bars in
   requestAnimationFrame(() => {
     container.querySelectorAll(".bar-fill").forEach((bar) => {
       bar.style.width = bar.dataset.target + "%";
     });
   });
 
-  // Click to scroll to card
   container.querySelectorAll(".bar-row").forEach((row) => {
     row.addEventListener("click", () => {
-      const card = document.querySelector(`.mat-card[data-id="${row.dataset.id}"]`);
+      const card = document.querySelector(
+        `.mat-card[data-id="${row.dataset.id}"]`
+      );
       if (card) {
         card.scrollIntoView({ behavior: "smooth", block: "center" });
         card.classList.add("expanded");
@@ -304,7 +441,6 @@ function renderMaterialCards() {
     })
     .join("");
 
-  // Toggle expand
   container.querySelectorAll(".mat-card").forEach((card) => {
     card.addEventListener("click", () => {
       card.classList.toggle("expanded");
@@ -317,7 +453,6 @@ function renderSupplyChain() {
   const container = $("#country-list");
   const mats = currentPhone.materials;
 
-  // Aggregate materials per country
   const countryMap = {};
   mats.forEach((m) => {
     const info = materials[m.id];
@@ -330,7 +465,6 @@ function renderSupplyChain() {
     });
   });
 
-  // Sort by number of materials descending
   const countries = Object.entries(countryMap).sort(
     (a, b) => b[1].materials.size - a[1].materials.size
   );
@@ -361,4 +495,81 @@ function renderInsights() {
     </div>`
     )
     .join("");
+}
+
+// ============================================================
+// Compare View
+// ============================================================
+function renderCompareView() {
+  $("#compare-back-name").textContent = currentPhone.name;
+  $("#compare-highlight-name").textContent = currentPhone.name;
+
+  const metrics = [
+    {
+      title: "Carbon Footprint",
+      unit: "kg CO₂",
+      color: "#e11d48",
+      getValue: (p) => p.carbonFootprint,
+    },
+    {
+      title: "Water Usage",
+      unit: "liters",
+      color: "#0d9488",
+      getValue: (p) => computePhoneStats(p).totalWater,
+    },
+    {
+      title: "Raw Material Cost",
+      unit: "$",
+      color: "#d97706",
+      getValue: (p) => computePhoneStats(p).rawCost,
+    },
+    {
+      title: "Retail Price",
+      unit: "$",
+      color: "#7c3aed",
+      getValue: (p) => p.retailPrice,
+    },
+  ];
+
+  const container = $("#compare-charts");
+  container.innerHTML = metrics
+    .map((metric) => {
+      const data = phones.map((p) => ({
+        id: p.id,
+        name: p.name,
+        value: metric.getValue(p),
+        isCurrent: p.id === currentPhone.id,
+      }));
+
+      // Sort by value descending
+      data.sort((a, b) => b.value - a.value);
+      const maxVal = data[0]?.value || 1;
+
+      const bars = data
+        .map(
+          (d) => `
+        <div class="cmp-row ${d.isCurrent ? "cmp-highlight" : ""}">
+          <span class="cmp-label">${d.name}</span>
+          <div class="cmp-track">
+            <div class="cmp-fill" style="width:0%;background:${d.isCurrent ? metric.color : "rgba(0,0,0,0.12)"}" data-target="${(d.value / maxVal) * 100}"></div>
+          </div>
+          <span class="cmp-value">${metric.unit === "$" ? "$" + d.value.toFixed(2) : fmtNum(d.value)}</span>
+        </div>`
+        )
+        .join("");
+
+      return `
+      <div class="cmp-chart">
+        <h3>${metric.title} <span class="h3-sub">(${metric.unit})</span></h3>
+        ${bars}
+      </div>`;
+    })
+    .join("");
+
+  // Animate comparison bars
+  requestAnimationFrame(() => {
+    container.querySelectorAll(".cmp-fill").forEach((bar) => {
+      bar.style.width = bar.dataset.target + "%";
+    });
+  });
 }
