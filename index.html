@@ -86,125 +86,137 @@
         </div>
       </header>
 
-      <!-- ===== Evolution / What Changed ===== -->
-      <section id="evolution-section" class="hidden">
-        <h3>What Changed</h3>
-        <div id="evolution-cards"></div>
-      </section>
+      <!-- Tab Navigation -->
+      <nav id="tab-bar">
+        <button class="tab-btn active" data-tab="impact">Impact</button>
+        <button class="tab-btn" data-tab="supply-chain">Supply Chain</button>
+        <button class="tab-btn" data-tab="composition">Composition</button>
+        <button class="tab-btn" data-tab="insights">Insights</button>
+      </nav>
 
-      <!-- ===== 1. THE TRUE COST — impact stats first ===== -->
-      <section id="stats-row">
-        <div class="stat-card stat-impact">
-          <div class="stat-value" id="stat-co2">—</div>
-          <div class="stat-label">kg CO&#8322; Lifecycle</div>
-          <div class="stat-equiv" id="stat-co2-equiv"></div>
-        </div>
-        <div class="stat-card stat-impact">
-          <div class="stat-value" id="stat-water">—</div>
-          <div class="stat-label">Liters of Water</div>
-          <div class="stat-equiv" id="stat-water-equiv"></div>
-        </div>
-        <div class="stat-card stat-impact">
-          <div class="stat-value" id="stat-countries">—</div>
-          <div class="stat-label">Source Countries</div>
-          <div class="stat-equiv" id="stat-countries-equiv"></div>
-        </div>
-        <div class="stat-card stat-price">
-          <div class="stat-value" id="stat-raw-cost">—</div>
-          <div class="stat-label">Raw Material Cost</div>
-          <div class="stat-equiv" id="stat-raw-equiv"></div>
-        </div>
-        <div class="stat-card stat-price">
-          <div class="stat-value" id="stat-retail">—</div>
-          <div class="stat-label">Retail Price</div>
-          <div class="stat-equiv" id="stat-retail-equiv"></div>
-        </div>
-        <div class="stat-card stat-price">
-          <div class="stat-value" id="stat-markup">—</div>
-          <div class="stat-label">Price Multiplier</div>
-          <div class="stat-equiv" id="stat-markup-equiv"></div>
-        </div>
-      </section>
-
-      <!-- Price gap visual -->
-      <section id="price-gap-section">
-        <h3>Where Does the Money Go?</h3>
-        <p class="section-desc">
-          The raw materials in your phone are worth almost nothing compared to
-          the retail price. The gap represents R&amp;D, manufacturing, software,
-          marketing, logistics, and profit.
-        </p>
-        <div id="price-gap"></div>
-      </section>
-
-      <!-- ===== 2. ENVIRONMENTAL FOOTPRINT — which materials hurt most ===== -->
-      <section id="eco-footprint-section">
-        <h3>Environmental Footprint by Material</h3>
-        <p class="section-desc">
-          Not all materials are equal. Some carry enormous ecological costs even
-          in tiny amounts. Gold, for instance, weighs just 0.034g in your phone
-          but requires devastating mining processes.
-        </p>
-        <div id="eco-footprint">
-          <div id="eco-co2-col">
-            <h4>CO&#8322; Emissions <span class="h3-sub">(kg)</span></h4>
-            <div id="eco-co2-bars"></div>
+      <!-- ===== TAB 1: IMPACT ===== -->
+      <div class="tab-panel active" data-tab="impact">
+        <section id="stats-row">
+          <div class="stat-card stat-impact">
+            <div class="stat-value" id="stat-co2">—</div>
+            <div class="stat-label">kg CO&#8322; Lifecycle</div>
+            <div class="stat-equiv" id="stat-co2-equiv"></div>
           </div>
-          <div id="eco-water-col">
-            <h4>Water Consumption <span class="h3-sub">(liters)</span></h4>
-            <div id="eco-water-bars"></div>
+          <div class="stat-card stat-impact">
+            <div class="stat-value" id="stat-water">—</div>
+            <div class="stat-label">Liters of Water</div>
+            <div class="stat-equiv" id="stat-water-equiv"></div>
           </div>
-        </div>
-      </section>
+          <div class="stat-card stat-impact">
+            <div class="stat-value" id="stat-countries">—</div>
+            <div class="stat-label">Source Countries</div>
+            <div class="stat-equiv" id="stat-countries-equiv"></div>
+          </div>
+          <div class="stat-card stat-price">
+            <div class="stat-value" id="stat-raw-cost">—</div>
+            <div class="stat-label">Raw Material Cost</div>
+            <div class="stat-equiv" id="stat-raw-equiv"></div>
+          </div>
+          <div class="stat-card stat-price">
+            <div class="stat-value" id="stat-retail">—</div>
+            <div class="stat-label">Retail Price</div>
+            <div class="stat-equiv" id="stat-retail-equiv"></div>
+          </div>
+          <div class="stat-card stat-price">
+            <div class="stat-value" id="stat-markup">—</div>
+            <div class="stat-label">Price Multiplier</div>
+            <div class="stat-equiv" id="stat-markup-equiv"></div>
+          </div>
+        </section>
 
-      <!-- ===== 3. GLOBAL SUPPLY CHAIN — interactive map ===== -->
-      <section id="supply-chain-section">
-        <h3>Global Supply Chain</h3>
-        <p class="section-desc">
-          Your iPhone's materials are sourced from mines, refineries, and
-          factories spanning 6 continents before final assembly.
-        </p>
-        <div id="supply-map">
-          <div id="map-tooltip" class="hidden"></div>
-        </div>
-      </section>
+        <section id="price-gap-section">
+          <h3>Where Does the Money Go?</h3>
+          <p class="section-desc">
+            The raw materials in your phone are worth almost nothing compared to
+            the retail price. The gap represents R&amp;D, manufacturing, software,
+            marketing, logistics, and profit.
+          </p>
+          <div id="price-gap"></div>
+        </section>
 
-      <!-- ===== 4. MATERIAL COMPOSITION — context, not headline ===== -->
-      <section id="composition-section">
-        <div id="chart-container">
-          <h3>What's Inside</h3>
-          <div id="donut-wrap">
-            <svg id="donut-chart" viewBox="0 0 200 200"></svg>
-            <div id="donut-center">
-              <span id="donut-center-value"></span>
-              <span id="donut-center-label"></span>
+        <section id="eco-footprint-section">
+          <h3>Environmental Footprint by Material</h3>
+          <p class="section-desc">
+            Not all materials are equal. Some carry enormous ecological costs even
+            in tiny amounts. Gold, for instance, weighs just 0.034g in your phone
+            but requires devastating mining processes.
+          </p>
+          <div id="eco-footprint">
+            <div id="eco-co2-col">
+              <h4>CO&#8322; Emissions <span class="h3-sub">(kg)</span></h4>
+              <div id="eco-co2-bars"></div>
+            </div>
+            <div id="eco-water-col">
+              <h4>Water Consumption <span class="h3-sub">(liters)</span></h4>
+              <div id="eco-water-bars"></div>
             </div>
           </div>
-          <div id="chart-legend"></div>
-        </div>
-        <div id="bars-container">
-          <h3>By Weight <span class="h3-sub">(grams)</span></h3>
-          <div id="material-bars"></div>
-        </div>
-      </section>
+        </section>
+      </div>
 
-      <!-- ===== 5. MATERIAL DEEP DIVE ===== -->
-      <section id="materials-section">
-        <h3>Material Deep Dive</h3>
-        <p class="section-desc">
-          Click any material to explore its origins, mining costs, and the
-          ecological damage it causes.
-        </p>
-        <div id="material-cards"></div>
-      </section>
+      <!-- ===== TAB 2: SUPPLY CHAIN ===== -->
+      <div class="tab-panel" data-tab="supply-chain">
+        <section id="supply-chain-section">
+          <h3>Global Supply Chain</h3>
+          <p class="section-desc">
+            Your iPhone's materials are sourced from mines, refineries, and
+            factories spanning 6 continents before final assembly.
+          </p>
+          <div id="supply-map">
+            <div id="map-tooltip" class="hidden"></div>
+          </div>
+        </section>
+      </div>
 
-      <!-- ===== 6. INSIGHT CARDS ===== -->
-      <section id="insights-section">
-        <h3>Things to Think About</h3>
-        <div id="insight-cards"></div>
-      </section>
+      <!-- ===== TAB 3: COMPOSITION ===== -->
+      <div class="tab-panel" data-tab="composition">
+        <section id="composition-section">
+          <div id="chart-container">
+            <h3>What's Inside</h3>
+            <div id="donut-wrap">
+              <svg id="donut-chart" viewBox="0 0 200 200"></svg>
+              <div id="donut-center">
+                <span id="donut-center-value"></span>
+                <span id="donut-center-label"></span>
+              </div>
+            </div>
+            <div id="chart-legend"></div>
+          </div>
+          <div id="bars-container">
+            <h3>By Weight <span class="h3-sub">(grams)</span></h3>
+            <div id="material-bars"></div>
+          </div>
+        </section>
 
-      <!-- ===== 7. COMPARE BUTTON ===== -->
+        <section id="materials-section">
+          <h3>Material Deep Dive</h3>
+          <p class="section-desc">
+            Click any material to explore its origins, mining costs, and the
+            ecological damage it causes.
+          </p>
+          <div id="material-cards"></div>
+        </section>
+      </div>
+
+      <!-- ===== TAB 4: INSIGHTS ===== -->
+      <div class="tab-panel" data-tab="insights">
+        <section id="evolution-section" class="hidden">
+          <h3>What Changed</h3>
+          <div id="evolution-cards"></div>
+        </section>
+
+        <section id="insights-section">
+          <h3>Things to Think About</h3>
+          <div id="insight-cards"></div>
+        </section>
+      </div>
+
+      <!-- ===== COMPARE BUTTON (always visible) ===== -->
       <section id="compare-cta">
         <button id="compare-btn">Compare All iPhone Models</button>
       </section>

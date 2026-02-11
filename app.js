@@ -18,6 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
   $("#back-btn").addEventListener("click", showSelector);
   $("#compare-btn").addEventListener("click", showCompare);
   $("#compare-back-btn").addEventListener("click", showDetail);
+  initTabs();
 });
 
 // ============================================================
@@ -87,6 +88,27 @@ function showDetail() {
 }
 
 // ============================================================
+// Tab Navigation
+// ============================================================
+function initTabs() {
+  $$(".tab-btn").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      $$(".tab-btn").forEach((b) => b.classList.remove("active"));
+      btn.classList.add("active");
+      const tab = btn.dataset.tab;
+      $$(".tab-panel").forEach((p) => {
+        p.classList.toggle("active", p.dataset.tab === tab);
+      });
+    });
+  });
+}
+
+function activateTab(tabName) {
+  $$(".tab-btn").forEach((b) => b.classList.toggle("active", b.dataset.tab === tabName));
+  $$(".tab-panel").forEach((p) => p.classList.toggle("active", p.dataset.tab === tabName));
+}
+
+// ============================================================
 // Helpers
 // ============================================================
 function computePhoneStats(phone) {
@@ -130,6 +152,7 @@ function fmtNum(n) {
 // Render Detail View
 // ============================================================
 function renderDetail() {
+  activateTab("impact");
   renderHeader();
   renderEvolution();
   renderStats();
@@ -304,52 +327,74 @@ function preloadMap() {
     });
 }
 
+// Category color palette for map
+const categoryColors = {
+  "Structural Metal": { base: [59, 130, 246], label: "Structural Metals" },   // blue
+  "Battery Material": { base: [239, 68, 68], label: "Battery Materials" },     // red
+  "Precious Metal":   { base: [234, 179, 8], label: "Precious Metals" },       // gold
+  "Electronics":      { base: [139, 92, 246], label: "Electronics" },           // purple
+  "Other":            { base: [107, 114, 128], label: "Other" },               // grey
+};
+
 function renderMap() {
   const container = $("#supply-map");
   const tooltip = $("#map-tooltip");
 
   if (!mapSvgDoc) {
-    // Fallback: render as country cards
     renderSupplyChainFallback();
     return;
   }
 
-  // Clone the SVG so we can modify it
   const svgEl = mapSvgDoc.documentElement.cloneNode(true);
   svgEl.setAttribute("id", "world-map-svg");
   svgEl.classList.add("world-map");
 
-  // Build country → materials map
+  // Build country → { materials, categories } map
   const countryIsoMap = {};
   currentPhone.materials.forEach((m) => {
     const info = materials[m.id];
     if (!info) return;
     info.sources.forEach((s) => {
       if (!countryIsoMap[s.iso]) {
-        countryIsoMap[s.iso] = { country: s.country, flag: s.flag, materials: new Set() };
+        countryIsoMap[s.iso] = {
+          country: s.country, flag: s.flag,
+          materials: new Set(), categoryCount: {},
+        };
       }
-      countryIsoMap[s.iso].materials.add(info.name);
+      const entry = countryIsoMap[s.iso];
+      entry.materials.add(info.name);
+      entry.categoryCount[info.category] = (entry.categoryCount[info.category] || 0) + 1;
     });
   });
 
-  // Color each country path
+  // Determine dominant category per country
+  Object.values(countryIsoMap).forEach((entry) => {
+    let maxCat = "Other", maxCount = 0;
+    for (const [cat, count] of Object.entries(entry.categoryCount)) {
+      if (count > maxCount) { maxCount = count; maxCat = cat; }
+    }
+    entry.dominantCategory = maxCat;
+  });
+
   const maxMats = Math.max(...Object.values(countryIsoMap).map((c) => c.materials.size));
 
   svgEl.querySelectorAll("path").forEach((path) => {
-    // ID may be on the path itself or on a parent <g> element
     const id = path.getAttribute("id") || (path.parentElement && path.parentElement.getAttribute("id"));
     if (countryIsoMap[id]) {
       const data = countryIsoMap[id];
-      const intensity = data.materials.size / maxMats;
-      // Teal gradient: lighter → darker based on material count
-      const r = Math.round(13 + (200 - 13) * (1 - intensity));
-      const g = Math.round(148 + (230 - 148) * (1 - intensity));
-      const b = Math.round(136 + (220 - 136) * (1 - intensity));
+      const catInfo = categoryColors[data.dominantCategory] || categoryColors["Other"];
+      const [br, bg, bb] = catInfo.base;
+      // Intensity: blend from light (few materials) to full color (many)
+      const t = maxMats > 1 ? (data.materials.size - 1) / (maxMats - 1) : 1;
+      const minOpacity = 0.3, opacity = minOpacity + t * (1 - minOpacity);
+      const r = Math.round(255 + (br - 255) * opacity);
+      const g = Math.round(255 + (bg - 255) * opacity);
+      const b = Math.round(255 + (bb - 255) * opacity);
       path.style.fill = `rgb(${r},${g},${b})`;
       path.style.cursor = "pointer";
       path.classList.add("map-source");
 
-      path.addEventListener("mouseenter", (e) => {
+      path.addEventListener("mouseenter", () => {
         tooltip.classList.remove("hidden");
         tooltip.innerHTML = `
           <strong>${data.flag} ${data.country}</strong>
@@ -373,22 +418,25 @@ function renderMap() {
     path.style.strokeWidth = "0.3";
   });
 
-  // Replace existing SVG if any
   const existing = container.querySelector(".world-map");
   if (existing) existing.remove();
   container.prepend(svgEl);
 
-  // Add legend
+  // Build category legend
   let legend = container.querySelector(".map-legend");
   if (!legend) {
     legend = document.createElement("div");
     legend.className = "map-legend";
     container.appendChild(legend);
   }
+  // Show only categories that appear in the current phone's source countries
+  const usedCats = new Set(Object.values(countryIsoMap).map((c) => c.dominantCategory));
   const totalCountries = Object.keys(countryIsoMap).length;
-  legend.innerHTML = `
-    <span class="map-legend-dot" style="background:rgb(13,148,136)"></span>
-    <span>${totalCountries} source countries — darker = more materials</span>`;
+  const legendItems = [...usedCats].map((cat) => {
+    const ci = categoryColors[cat] || categoryColors["Other"];
+    return `<span class="map-legend-item"><span class="map-legend-dot" style="background:rgb(${ci.base.join(",")})"></span>${ci.label}</span>`;
+  }).join("");
+  legend.innerHTML = `${legendItems}<span class="map-legend-count">${totalCountries} source countries</span>`;
 }
 
 function renderSupplyChainFallback() {
