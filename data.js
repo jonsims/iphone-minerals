@@ -12,10 +12,10 @@ export const materials = {
     icon: "⛓",
     pricePerKg: 3.5,
     sources: [
-      { country: "China", flag: "🇨🇳", pct: 54 },
-      { country: "India", flag: "🇮🇳", pct: 6 },
-      { country: "Japan", flag: "🇯🇵", pct: 5 },
-      { country: "USA", flag: "🇺🇸", pct: 5 },
+      { country: "China", flag: "🇨🇳", iso: "cn", pct: 54 },
+      { country: "India", flag: "🇮🇳", iso: "in", pct: 6 },
+      { country: "Japan", flag: "🇯🇵", iso: "jp", pct: 5 },
+      { country: "USA", flag: "🇺🇸", iso: "us", pct: 5 },
     ],
     eco: {
       co2PerKg: 6.15,
@@ -32,10 +32,10 @@ export const materials = {
     icon: "🔩",
     pricePerKg: 2.5,
     sources: [
-      { country: "China", flag: "🇨🇳", pct: 57 },
-      { country: "India", flag: "🇮🇳", pct: 6 },
-      { country: "Russia", flag: "🇷🇺", pct: 6 },
-      { country: "Canada", flag: "🇨🇦", pct: 5 },
+      { country: "China", flag: "🇨🇳", iso: "cn", pct: 57 },
+      { country: "India", flag: "🇮🇳", iso: "in", pct: 6 },
+      { country: "Russia", flag: "🇷🇺", iso: "ru", pct: 6 },
+      { country: "Canada", flag: "🇨🇦", iso: "ca", pct: 5 },
     ],
     eco: {
       co2PerKg: 11.5,
@@ -52,10 +52,10 @@ export const materials = {
     icon: "🛡",
     pricePerKg: 35,
     sources: [
-      { country: "China", flag: "🇨🇳", pct: 45 },
-      { country: "Russia", flag: "🇷🇺", pct: 13 },
-      { country: "Japan", flag: "🇯🇵", pct: 14 },
-      { country: "Kazakhstan", flag: "🇰🇿", pct: 7 },
+      { country: "China", flag: "🇨🇳", iso: "cn", pct: 45 },
+      { country: "Russia", flag: "🇷🇺", iso: "ru", pct: 13 },
+      { country: "Japan", flag: "🇯🇵", iso: "jp", pct: 14 },
+      { country: "Kazakhstan", flag: "🇰🇿", iso: "kz", pct: 7 },
     ],
     eco: {
       co2PerKg: 36,
@@ -72,10 +72,10 @@ export const materials = {
     icon: "🪟",
     pricePerKg: 30,
     sources: [
-      { country: "USA", flag: "🇺🇸", pct: 40 },
-      { country: "Japan", flag: "🇯🇵", pct: 25 },
-      { country: "South Korea", flag: "🇰🇷", pct: 15 },
-      { country: "China", flag: "🇨🇳", pct: 10 },
+      { country: "USA", flag: "🇺🇸", iso: "us", pct: 40 },
+      { country: "Japan", flag: "🇯🇵", iso: "jp", pct: 25 },
+      { country: "South Korea", flag: "🇰🇷", iso: "kr", pct: 15 },
+      { country: "China", flag: "🇨🇳", iso: "cn", pct: 10 },
     ],
     eco: {
       co2PerKg: 1.5,
@@ -92,10 +92,10 @@ export const materials = {
     icon: "⚡",
     pricePerKg: 15,
     sources: [
-      { country: "Australia", flag: "🇦🇺", pct: 47 },
-      { country: "Chile", flag: "🇨🇱", pct: 30 },
-      { country: "China", flag: "🇨🇳", pct: 15 },
-      { country: "Argentina", flag: "🇦🇷", pct: 5 },
+      { country: "Australia", flag: "🇦🇺", iso: "au", pct: 47 },
+      { country: "Chile", flag: "🇨🇱", iso: "cl", pct: 30 },
+      { country: "China", flag: "🇨🇳", iso: "cn", pct: 15 },
+      { country: "Argentina", flag: "🇦🇷", iso: "ar", pct: 5 },
     ],
     eco: {
       co2PerKg: 15,
@@ -112,10 +112,10 @@ export const materials = {
     icon: "⛏",
     pricePerKg: 30,
     sources: [
-      { country: "DRC", flag: "🇨🇩", pct: 73 },
-      { country: "Indonesia", flag: "🇮🇩", pct: 5 },
-      { country: "Russia", flag: "🇷🇺", pct: 4 },
-      { country: "Australia", flag: "🇦🇺", pct: 3 },
+      { country: "DRC", flag: "🇨🇩", iso: "cd", pct: 73 },
+      { country: "Indonesia", flag: "🇮🇩", iso: "id", pct: 5 },
+      { country: "Russia", flag: "🇷🇺", iso: "ru", pct: 4 },
+      { country: "Australia", flag: "🇦🇺", iso: "au", pct: 3 },
     ],
     eco: {
       co2PerKg: 8.3,
@@ -132,10 +132,10 @@ export const materials = {
     icon: "🔋",
     pricePerKg: 16,
     sources: [
-      { country: "Indonesia", flag: "🇮🇩", pct: 49 },
-      { country: "Philippines", flag: "🇵🇭", pct: 11 },
-      { country: "Russia", flag: "🇷🇺", pct: 7 },
-      { country: "New Caledonia", flag: "🇳🇨", pct: 6 },
+      { country: "Indonesia", flag: "🇮🇩", iso: "id", pct: 49 },
+      { country: "Philippines", flag: "🇵🇭", iso: "ph", pct: 11 },
+      { country: "Russia", flag: "🇷🇺", iso: "ru", pct: 7 },
+      { country: "New Caledonia", flag: "🇳🇨", iso: "nc", pct: 6 },
     ],
     eco: {
       co2PerKg: 13.4,
@@ -152,10 +152,10 @@ export const materials = {
     icon: "✏️",
     pricePerKg: 1.5,
     sources: [
-      { country: "China", flag: "🇨🇳", pct: 65 },
-      { country: "Mozambique", flag: "🇲🇿", pct: 8 },
-      { country: "Brazil", flag: "🇧🇷", pct: 7 },
-      { country: "Madagascar", flag: "🇲🇬", pct: 5 },
+      { country: "China", flag: "🇨🇳", iso: "cn", pct: 65 },
+      { country: "Mozambique", flag: "🇲🇿", iso: "mz", pct: 8 },
+      { country: "Brazil", flag: "🇧🇷", iso: "br", pct: 7 },
+      { country: "Madagascar", flag: "🇲🇬", iso: "mg", pct: 5 },
     ],
     eco: {
       co2PerKg: 1.8,
@@ -172,10 +172,10 @@ export const materials = {
     icon: "🔌",
     pricePerKg: 9,
     sources: [
-      { country: "Chile", flag: "🇨🇱", pct: 24 },
-      { country: "Peru", flag: "🇵🇪", pct: 10 },
-      { country: "DRC", flag: "🇨🇩", pct: 9 },
-      { country: "China", flag: "🇨🇳", pct: 8 },
+      { country: "Chile", flag: "🇨🇱", iso: "cl", pct: 24 },
+      { country: "Peru", flag: "🇵🇪", iso: "pe", pct: 10 },
+      { country: "DRC", flag: "🇨🇩", iso: "cd", pct: 9 },
+      { country: "China", flag: "🇨🇳", iso: "cn", pct: 8 },
     ],
     eco: {
       co2PerKg: 4.1,
@@ -192,10 +192,10 @@ export const materials = {
     icon: "💎",
     pricePerKg: 250,
     sources: [
-      { country: "China", flag: "🇨🇳", pct: 60 },
-      { country: "Myanmar", flag: "🇲🇲", pct: 13 },
-      { country: "Australia", flag: "🇦🇺", pct: 7 },
-      { country: "USA", flag: "🇺🇸", pct: 4 },
+      { country: "China", flag: "🇨🇳", iso: "cn", pct: 60 },
+      { country: "Myanmar", flag: "🇲🇲", iso: "mm", pct: 13 },
+      { country: "Australia", flag: "🇦🇺", iso: "au", pct: 7 },
+      { country: "USA", flag: "🇺🇸", iso: "us", pct: 4 },
     ],
     eco: {
       co2PerKg: 30,
@@ -212,10 +212,10 @@ export const materials = {
     icon: "🔨",
     pricePerKg: 35,
     sources: [
-      { country: "China", flag: "🇨🇳", pct: 82 },
-      { country: "Vietnam", flag: "🇻🇳", pct: 5 },
-      { country: "Russia", flag: "🇷🇺", pct: 3 },
-      { country: "Bolivia", flag: "🇧🇴", pct: 2 },
+      { country: "China", flag: "🇨🇳", iso: "cn", pct: 82 },
+      { country: "Vietnam", flag: "🇻🇳", iso: "vn", pct: 5 },
+      { country: "Russia", flag: "🇷🇺", iso: "ru", pct: 3 },
+      { country: "Bolivia", flag: "🇧🇴", iso: "bo", pct: 2 },
     ],
     eco: {
       co2PerKg: 12.5,
@@ -232,10 +232,10 @@ export const materials = {
     icon: "🔬",
     pricePerKg: 150,
     sources: [
-      { country: "DRC", flag: "🇨🇩", pct: 33 },
-      { country: "Rwanda", flag: "🇷🇼", pct: 15 },
-      { country: "Brazil", flag: "🇧🇷", pct: 13 },
-      { country: "Ethiopia", flag: "🇪🇹", pct: 5 },
+      { country: "DRC", flag: "🇨🇩", iso: "cd", pct: 33 },
+      { country: "Rwanda", flag: "🇷🇼", iso: "rw", pct: 15 },
+      { country: "Brazil", flag: "🇧🇷", iso: "br", pct: 13 },
+      { country: "Ethiopia", flag: "🇪🇹", iso: "et", pct: 5 },
     ],
     eco: {
       co2PerKg: 70,
@@ -252,10 +252,10 @@ export const materials = {
     icon: "🫧",
     pricePerKg: 25,
     sources: [
-      { country: "China", flag: "🇨🇳", pct: 31 },
-      { country: "Indonesia", flag: "🇮🇩", pct: 17 },
-      { country: "Myanmar", flag: "🇲🇲", pct: 14 },
-      { country: "Peru", flag: "🇵🇪", pct: 5 },
+      { country: "China", flag: "🇨🇳", iso: "cn", pct: 31 },
+      { country: "Indonesia", flag: "🇮🇩", iso: "id", pct: 17 },
+      { country: "Myanmar", flag: "🇲🇲", iso: "mm", pct: 14 },
+      { country: "Peru", flag: "🇵🇪", iso: "pe", pct: 5 },
     ],
     eco: {
       co2PerKg: 16,
@@ -272,10 +272,10 @@ export const materials = {
     icon: "✨",
     pricePerKg: 65000,
     sources: [
-      { country: "China", flag: "🇨🇳", pct: 11 },
-      { country: "Australia", flag: "🇦🇺", pct: 10 },
-      { country: "Russia", flag: "🇷🇺", pct: 9 },
-      { country: "Canada", flag: "🇨🇦", pct: 6 },
+      { country: "China", flag: "🇨🇳", iso: "cn", pct: 11 },
+      { country: "Australia", flag: "🇦🇺", iso: "au", pct: 10 },
+      { country: "Russia", flag: "🇷🇺", iso: "ru", pct: 9 },
+      { country: "Canada", flag: "🇨🇦", iso: "ca", pct: 6 },
     ],
     eco: {
       co2PerKg: 20000,
@@ -292,10 +292,10 @@ export const materials = {
     icon: "🪙",
     pricePerKg: 800,
     sources: [
-      { country: "Mexico", flag: "🇲🇽", pct: 24 },
-      { country: "Peru", flag: "🇵🇪", pct: 15 },
-      { country: "China", flag: "🇨🇳", pct: 13 },
-      { country: "Poland", flag: "🇵🇱", pct: 5 },
+      { country: "Mexico", flag: "🇲🇽", iso: "mx", pct: 24 },
+      { country: "Peru", flag: "🇵🇪", iso: "pe", pct: 15 },
+      { country: "China", flag: "🇨🇳", iso: "cn", pct: 13 },
+      { country: "Poland", flag: "🇵🇱", iso: "pl", pct: 5 },
     ],
     eco: {
       co2PerKg: 200,
@@ -312,10 +312,10 @@ export const materials = {
     icon: "💻",
     pricePerKg: 10,
     sources: [
-      { country: "China", flag: "🇨🇳", pct: 67 },
-      { country: "Russia", flag: "🇷🇺", pct: 5 },
-      { country: "Brazil", flag: "🇧🇷", pct: 5 },
-      { country: "Norway", flag: "🇳🇴", pct: 4 },
+      { country: "China", flag: "🇨🇳", iso: "cn", pct: 67 },
+      { country: "Russia", flag: "🇷🇺", iso: "ru", pct: 5 },
+      { country: "Brazil", flag: "🇧🇷", iso: "br", pct: 5 },
+      { country: "Norway", flag: "🇳🇴", iso: "no", pct: 4 },
     ],
     eco: {
       co2PerKg: 12,
@@ -332,10 +332,10 @@ export const materials = {
     icon: "🧫",
     pricePerKg: 2,
     sources: [
-      { country: "China", flag: "🇨🇳", pct: 32 },
-      { country: "USA", flag: "🇺🇸", pct: 12 },
-      { country: "Saudi Arabia", flag: "🇸🇦", pct: 8 },
-      { country: "South Korea", flag: "🇰🇷", pct: 6 },
+      { country: "China", flag: "🇨🇳", iso: "cn", pct: 32 },
+      { country: "USA", flag: "🇺🇸", iso: "us", pct: 12 },
+      { country: "Saudi Arabia", flag: "🇸🇦", iso: "sa", pct: 8 },
+      { country: "South Korea", flag: "🇰🇷", iso: "kr", pct: 6 },
     ],
     eco: {
       co2PerKg: 3.5,
@@ -365,6 +365,10 @@ export const phones = [
     batteryWh: 10.35,
     retailPrice: 999,
     carbonFootprint: 79,
+    changes: [
+      { text: "First iPhone with OLED display and Face ID", direction: "neutral" },
+      { text: "Stainless steel frame replaced aluminum on flagship", direction: "neutral" },
+    ],
     materials: [
       { id: "stainless-steel", grams: 52 },
       { id: "glass", grams: 33 },
@@ -394,6 +398,11 @@ export const phones = [
     batteryWh: 11.16,
     retailPrice: 749,
     carbonFootprint: 62,
+    changes: [
+      { text: "Aluminum frame reduces titanium/steel demand", direction: "improved" },
+      { text: "LCD display uses less indium than OLED", direction: "improved" },
+      { text: "Heavier battery increases cobalt content", direction: "neutral" },
+    ],
     materials: [
       { id: "aluminum", grams: 28 },
       { id: "stainless-steel", grams: 18 },
@@ -424,6 +433,10 @@ export const phones = [
     batteryWh: 10.13,
     retailPrice: 999,
     carbonFootprint: 70,
+    changes: [
+      { text: "Improved water resistance (IP68)", direction: "neutral" },
+      { text: "A12 chip is more energy-efficient than A11", direction: "improved" },
+    ],
     materials: [
       { id: "stainless-steel", grams: 53 },
       { id: "glass", grams: 34 },
@@ -453,6 +466,10 @@ export const phones = [
     batteryWh: 11.91,
     retailPrice: 699,
     carbonFootprint: 72,
+    changes: [
+      { text: "Larger battery capacity (+7%) increases mineral demand", direction: "neutral" },
+      { text: "100% recycled rare earths in Taptic Engine", direction: "improved" },
+    ],
     materials: [
       { id: "aluminum", grams: 27 },
       { id: "stainless-steel", grams: 18 },
@@ -483,6 +500,11 @@ export const phones = [
     batteryWh: 15.04,
     retailPrice: 999,
     carbonFootprint: 80,
+    changes: [
+      { text: "Significantly larger battery (15 Wh) increases cobalt content", direction: "neutral" },
+      { text: "100% recycled rare earths in Taptic Engine", direction: "improved" },
+      { text: "First 'Pro' model with triple camera system", direction: "neutral" },
+    ],
     materials: [
       { id: "stainless-steel", grams: 54 },
       { id: "glass", grams: 36 },
@@ -512,6 +534,11 @@ export const phones = [
     batteryWh: 10.78,
     retailPrice: 799,
     carbonFootprint: 70,
+    changes: [
+      { text: "First 5G iPhone — new rare earth magnets for MagSafe", direction: "neutral" },
+      { text: "Ceramic Shield glass introduced (nano-ceramic crystals)", direction: "neutral" },
+      { text: "Smaller & lighter design reduces overall material use", direction: "improved" },
+    ],
     materials: [
       { id: "aluminum", grams: 24 },
       { id: "stainless-steel", grams: 14 },
@@ -542,6 +569,11 @@ export const phones = [
     batteryWh: 10.78,
     retailPrice: 999,
     carbonFootprint: 82,
+    changes: [
+      { text: "LiDAR scanner adds new sensor components", direction: "neutral" },
+      { text: "5G modem increases rare earth and copper demand", direction: "neutral" },
+      { text: "98% recycled rare earths in all magnets", direction: "improved" },
+    ],
     materials: [
       { id: "stainless-steel", grams: 56 },
       { id: "glass", grams: 36 },
@@ -571,6 +603,11 @@ export const phones = [
     batteryWh: 12.41,
     retailPrice: 799,
     carbonFootprint: 64,
+    changes: [
+      { text: "Cobalt reduced ~15% vs iPhone 12 through chemistry changes", direction: "improved" },
+      { text: "Antenna lines use recycled plastic", direction: "improved" },
+      { text: "Carbon footprint dropped from 70 to 64 kg CO2", direction: "improved" },
+    ],
     materials: [
       { id: "aluminum", grams: 25 },
       { id: "stainless-steel", grams: 15 },
@@ -601,6 +638,11 @@ export const phones = [
     batteryWh: 11.97,
     retailPrice: 999,
     carbonFootprint: 69,
+    changes: [
+      { text: "ProMotion 120Hz display — LTPO technology more efficient", direction: "improved" },
+      { text: "100% recycled tin in solder of main logic board", direction: "improved" },
+      { text: "Heaviest iPhone at 204g increases steel content", direction: "neutral" },
+    ],
     materials: [
       { id: "stainless-steel", grams: 60 },
       { id: "glass", grams: 38 },
@@ -630,6 +672,11 @@ export const phones = [
     batteryWh: 12.68,
     retailPrice: 799,
     carbonFootprint: 61,
+    changes: [
+      { text: "Removable back glass improves repairability", direction: "improved" },
+      { text: "Cobalt reduced further (-13% vs iPhone 13)", direction: "improved" },
+      { text: "Satellite SOS connectivity (new antenna components)", direction: "neutral" },
+    ],
     materials: [
       { id: "aluminum", grams: 24 },
       { id: "stainless-steel", grams: 14 },
@@ -660,6 +707,11 @@ export const phones = [
     batteryWh: 12.38,
     retailPrice: 999,
     carbonFootprint: 65,
+    changes: [
+      { text: "Dynamic Island replaces notch — reduces display waste", direction: "improved" },
+      { text: "A16 chip uses 2nd-gen 5nm (more efficient)", direction: "improved" },
+      { text: "100% recycled gold in plating of multiple PCBs", direction: "improved" },
+    ],
     materials: [
       { id: "stainless-steel", grams: 62 },
       { id: "glass", grams: 38 },
@@ -689,6 +741,11 @@ export const phones = [
     batteryWh: 12.98,
     retailPrice: 799,
     carbonFootprint: 56,
+    changes: [
+      { text: "USB-C replaces Lightning — universal standard reduces e-waste", direction: "improved" },
+      { text: "75% recycled aluminum in enclosure", direction: "improved" },
+      { text: "100% recycled cobalt in battery", direction: "improved" },
+    ],
     materials: [
       { id: "aluminum", grams: 25 },
       { id: "stainless-steel", grams: 12 },
@@ -719,6 +776,12 @@ export const phones = [
     batteryWh: 12.74,
     retailPrice: 999,
     carbonFootprint: 56,
+    changes: [
+      { text: "Titanium frame replaces stainless steel — 19g lighter", direction: "improved" },
+      { text: "100% recycled cobalt in battery", direction: "improved" },
+      { text: "Action button replaces mute switch (fewer moving parts)", direction: "improved" },
+      { text: "First 3nm chip in a phone (A17 Pro)", direction: "improved" },
+    ],
     materials: [
       { id: "titanium", grams: 22 },
       { id: "aluminum", grams: 12 },
@@ -750,6 +813,11 @@ export const phones = [
     batteryWh: 13.56,
     retailPrice: 799,
     carbonFootprint: 56,
+    changes: [
+      { text: "85%+ recycled metals across main logic board", direction: "improved" },
+      { text: "100% recycled cobalt in battery (continued)", direction: "improved" },
+      { text: "Camera Control button adds new haptic component", direction: "neutral" },
+    ],
     materials: [
       { id: "aluminum", grams: 25 },
       { id: "stainless-steel", grams: 11 },
@@ -780,6 +848,11 @@ export const phones = [
     batteryWh: 14.06,
     retailPrice: 999,
     carbonFootprint: 56,
+    changes: [
+      { text: "100% recycled gold in plating of all printed circuit boards", direction: "improved" },
+      { text: "100% recycled cobalt, 100% recycled lithium in battery", direction: "improved" },
+      { text: "Larger 6.3\" display increases glass content", direction: "neutral" },
+    ],
     materials: [
       { id: "titanium", grams: 24 },
       { id: "aluminum", grams: 13 },
@@ -798,6 +871,79 @@ export const phones = [
       { id: "silver", grams: 0.36 },
       { id: "silicon", grams: 3.5 },
       { id: "plastics", grams: 10 },
+    ],
+  },
+  {
+    id: "iphone-17",
+    name: "iPhone 17",
+    year: 2025,
+    weight: 172,
+    frame: "Aluminum",
+    display: '6.1" ProMotion Super Retina XDR OLED',
+    chip: "A19",
+    batteryWh: 14.5,
+    retailPrice: 799,
+    carbonFootprint: 52,
+    changes: [
+      { text: "ProMotion 120Hz comes to standard model for first time", direction: "improved" },
+      { text: "Further carbon footprint reduction to ~52 kg CO2", direction: "improved" },
+      { text: "Over 90% recycled metals across logic board", direction: "improved" },
+      { text: "Cobalt per phone at all-time low for standard model", direction: "improved" },
+    ],
+    materials: [
+      { id: "aluminum", grams: 24 },
+      { id: "stainless-steel", grams: 10 },
+      { id: "glass", grams: 34 },
+      { id: "lithium", grams: 1.3 },
+      { id: "cobalt", grams: 3.4 },
+      { id: "nickel", grams: 5.8 },
+      { id: "graphite", grams: 14.5 },
+      { id: "copper", grams: 15 },
+      { id: "rare-earths", grams: 1.5 },
+      { id: "tungsten", grams: 4.0 },
+      { id: "tantalum", grams: 0.015 },
+      { id: "tin", grams: 1.9 },
+      { id: "gold", grams: 0.034 },
+      { id: "silver", grams: 0.34 },
+      { id: "silicon", grams: 3.0 },
+      { id: "plastics", grams: 11 },
+    ],
+  },
+  {
+    id: "iphone-17-pro",
+    name: "iPhone 17 Pro",
+    year: 2025,
+    weight: 194,
+    frame: "Titanium",
+    display: '6.3" ProMotion Super Retina XDR OLED',
+    chip: "A19 Pro",
+    batteryWh: 15.0,
+    retailPrice: 1099,
+    carbonFootprint: 54,
+    changes: [
+      { text: "Titanium-aluminum composite frame reduces weight vs pure titanium", direction: "improved" },
+      { text: "100% recycled cobalt, lithium, gold, copper, and tin", direction: "improved" },
+      { text: "2nm A19 Pro chip — most energy-efficient yet", direction: "improved" },
+      { text: "Higher recycled content than any previous iPhone", direction: "improved" },
+    ],
+    materials: [
+      { id: "titanium", grams: 20 },
+      { id: "aluminum", grams: 16 },
+      { id: "stainless-steel", grams: 8 },
+      { id: "glass", grams: 38 },
+      { id: "lithium", grams: 1.4 },
+      { id: "cobalt", grams: 3.2 },
+      { id: "nickel", grams: 6.0 },
+      { id: "graphite", grams: 15 },
+      { id: "copper", grams: 18 },
+      { id: "rare-earths", grams: 1.5 },
+      { id: "tungsten", grams: 5.0 },
+      { id: "tantalum", grams: 0.016 },
+      { id: "tin", grams: 2.0 },
+      { id: "gold", grams: 0.036 },
+      { id: "silver", grams: 0.36 },
+      { id: "silicon", grams: 3.5 },
+      { id: "plastics", grams: 9 },
     ],
   },
 ];

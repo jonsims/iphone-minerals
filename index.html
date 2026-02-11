@@ -28,6 +28,38 @@
         <div class="selector-label">Select your iPhone</div>
         <div id="phone-grid"></div>
       </div>
+
+      <!-- Cumulative footprint calculator -->
+      <div id="calculator-section" class="hidden">
+        <h3>Calculate Your Total Footprint</h3>
+        <p class="section-desc">
+          Check off every iPhone you've owned — new or refurbished — to see
+          your cumulative environmental impact.
+        </p>
+        <div id="calc-grid"></div>
+        <div id="calc-summary" class="hidden">
+          <div class="calc-stat">
+            <div class="calc-stat-value" id="calc-co2">0</div>
+            <div class="calc-stat-label">kg CO&#8322; total</div>
+            <div class="calc-stat-equiv" id="calc-co2-equiv"></div>
+          </div>
+          <div class="calc-stat">
+            <div class="calc-stat-value" id="calc-water">0</div>
+            <div class="calc-stat-label">Liters of water</div>
+            <div class="calc-stat-equiv" id="calc-water-equiv"></div>
+          </div>
+          <div class="calc-stat">
+            <div class="calc-stat-value" id="calc-raw">$0</div>
+            <div class="calc-stat-label">Raw material cost</div>
+            <div class="calc-stat-equiv" id="calc-raw-equiv"></div>
+          </div>
+          <div class="calc-stat">
+            <div class="calc-stat-value" id="calc-devices">0</div>
+            <div class="calc-stat-label">Devices</div>
+            <div class="calc-stat-equiv" id="calc-devices-equiv"></div>
+          </div>
+        </div>
+      </div>
     </section>
 
     <!-- ====== MAIN DETAIL VIEW (hidden until selection) ====== -->
@@ -53,6 +85,12 @@
           </div>
         </div>
       </header>
+
+      <!-- ===== Evolution / What Changed ===== -->
+      <section id="evolution-section" class="hidden">
+        <h3>What Changed</h3>
+        <div id="evolution-cards"></div>
+      </section>
 
       <!-- ===== 1. THE TRUE COST — impact stats first ===== -->
       <section id="stats-row">
@@ -119,14 +157,16 @@
         </div>
       </section>
 
-      <!-- ===== 3. GLOBAL SUPPLY CHAIN — moved up ===== -->
+      <!-- ===== 3. GLOBAL SUPPLY CHAIN — interactive map ===== -->
       <section id="supply-chain-section">
         <h3>Global Supply Chain</h3>
         <p class="section-desc">
           Your iPhone's materials are sourced from mines, refineries, and
           factories spanning 6 continents before final assembly.
         </p>
-        <div id="country-list"></div>
+        <div id="supply-map">
+          <div id="map-tooltip" class="hidden"></div>
+        </div>
       </section>
 
       <!-- ===== 4. MATERIAL COMPOSITION — context, not headline ===== -->
@@ -178,9 +218,11 @@
           <a href="https://www.ifixit.com" target="_blank" rel="noopener">iFixit teardowns</a>,
           <a href="https://www.usgs.gov/centers/national-minerals-information-center" target="_blank" rel="noopener">USGS Mineral Commodity Summaries</a>,
           and published lifecycle assessment studies. Commodity prices are
-          approximate 2024 market averages. Ecological data drawn from
-          peer-reviewed LCA literature. Figures are approximate and intended for
-          educational purposes.
+          approximate 2024 market averages. iPhone 17 data is estimated based
+          on industry trends. Ecological data drawn from peer-reviewed LCA
+          literature. Figures are approximate and intended for educational
+          purposes. World map from
+          <a href="https://github.com/flekschas/simple-world-map" target="_blank" rel="noopener">simple-world-map</a> (MIT License).
         </p>
       </footer>
 
@@ -199,7 +241,7 @@
       <h2 class="compare-title">Compare All iPhone Models</h2>
       <p class="section-desc compare-subtitle">
         See how your <strong id="compare-highlight-name"></strong> stacks up
-        against every model from iPhone X to iPhone 16 Pro.
+        against every model from iPhone X to iPhone 17 Pro.
       </p>
       <div id="compare-charts"></div>
       <p class="credit">Vibe-coded by Jonathan Sims, Babson College</p>

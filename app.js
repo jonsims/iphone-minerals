@@ -1,5 +1,5 @@
 // ============================================================
-// iPhone Minerals — Application Logic (v2: Impact-first)
+// iPhone Minerals — Application Logic (v3: Map, Calculator, Evolution)
 // ============================================================
 import { materials, phones, insights } from "./data.js";
 
@@ -8,10 +8,13 @@ const $$ = (sel) => [...document.querySelectorAll(sel)];
 
 // -------------------- State --------------------
 let currentPhone = null;
+let mapSvgDoc = null; // cached SVG document
 
 // -------------------- Init --------------------
 document.addEventListener("DOMContentLoaded", () => {
   renderPhoneGrid();
+  renderCalculator();
+  preloadMap();
   $("#back-btn").addEventListener("click", showSelector);
   $("#compare-btn").addEventListener("click", showCompare);
   $("#compare-back-btn").addEventListener("click", showDetail);
@@ -128,10 +131,11 @@ function fmtNum(n) {
 // ============================================================
 function renderDetail() {
   renderHeader();
+  renderEvolution();
   renderStats();
   renderPriceGap();
   renderEcoFootprint();
-  renderSupplyChain();
+  renderMap();
   renderDonut();
   renderBars();
   renderMaterialCards();
@@ -145,6 +149,28 @@ function renderHeader() {
   $("#phone-frame").textContent = currentPhone.frame + " frame";
   $("#phone-chip").textContent = currentPhone.chip;
   $("#phone-weight").textContent = currentPhone.weight + "g";
+}
+
+// -------------------- Evolution / What Changed --------------------
+function renderEvolution() {
+  const section = $("#evolution-section");
+  const container = $("#evolution-cards");
+  const changes = currentPhone.changes;
+
+  if (!changes || changes.length === 0) {
+    section.classList.add("hidden");
+    return;
+  }
+
+  section.classList.remove("hidden");
+
+  container.innerHTML = changes
+    .map((c) => {
+      const icon = c.direction === "improved" ? "▲" : "●";
+      const cls = c.direction === "improved" ? "evo-improved" : "evo-neutral";
+      return `<div class="evo-item ${cls}"><span class="evo-icon">${icon}</span> ${c.text}</div>`;
+    })
+    .join("");
 }
 
 // -------------------- Stats (impact-first) --------------------
@@ -263,6 +289,139 @@ function renderEcoFootprint() {
       bar.style.width = bar.dataset.target + "%";
     });
   });
+}
+
+// -------------------- Interactive World Map --------------------
+function preloadMap() {
+  fetch("world.svg")
+    .then((r) => r.text())
+    .then((svgText) => {
+      const parser = new DOMParser();
+      mapSvgDoc = parser.parseFromString(svgText, "image/svg+xml");
+    })
+    .catch(() => {
+      // SVG failed to load — will fall back to country list
+    });
+}
+
+function renderMap() {
+  const container = $("#supply-map");
+  const tooltip = $("#map-tooltip");
+
+  if (!mapSvgDoc) {
+    // Fallback: render as country cards
+    renderSupplyChainFallback();
+    return;
+  }
+
+  // Clone the SVG so we can modify it
+  const svgEl = mapSvgDoc.documentElement.cloneNode(true);
+  svgEl.setAttribute("id", "world-map-svg");
+  svgEl.classList.add("world-map");
+
+  // Build country → materials map
+  const countryIsoMap = {};
+  currentPhone.materials.forEach((m) => {
+    const info = materials[m.id];
+    if (!info) return;
+    info.sources.forEach((s) => {
+      if (!countryIsoMap[s.iso]) {
+        countryIsoMap[s.iso] = { country: s.country, flag: s.flag, materials: new Set() };
+      }
+      countryIsoMap[s.iso].materials.add(info.name);
+    });
+  });
+
+  // Color each country path
+  const maxMats = Math.max(...Object.values(countryIsoMap).map((c) => c.materials.size));
+
+  svgEl.querySelectorAll("path").forEach((path) => {
+    const id = path.getAttribute("id");
+    if (countryIsoMap[id]) {
+      const data = countryIsoMap[id];
+      const intensity = data.materials.size / maxMats;
+      // Teal gradient: lighter → darker based on material count
+      const r = Math.round(13 + (200 - 13) * (1 - intensity));
+      const g = Math.round(148 + (230 - 148) * (1 - intensity));
+      const b = Math.round(136 + (220 - 136) * (1 - intensity));
+      path.style.fill = `rgb(${r},${g},${b})`;
+      path.style.cursor = "pointer";
+      path.classList.add("map-source");
+
+      path.addEventListener("mouseenter", (e) => {
+        tooltip.classList.remove("hidden");
+        tooltip.innerHTML = `
+          <strong>${data.flag} ${data.country}</strong>
+          <div class="map-tip-mats">${[...data.materials].join(", ")}</div>
+          <div class="map-tip-count">${data.materials.size} material${data.materials.size > 1 ? "s" : ""}</div>`;
+      });
+
+      path.addEventListener("mousemove", (e) => {
+        const rect = container.getBoundingClientRect();
+        tooltip.style.left = (e.clientX - rect.left + 12) + "px";
+        tooltip.style.top = (e.clientY - rect.top - 10) + "px";
+      });
+
+      path.addEventListener("mouseleave", () => {
+        tooltip.classList.add("hidden");
+      });
+    } else {
+      path.style.fill = "#f0f0f0";
+    }
+    path.style.stroke = "#e0e0e0";
+    path.style.strokeWidth = "0.3";
+  });
+
+  // Replace existing SVG if any
+  const existing = container.querySelector(".world-map");
+  if (existing) existing.remove();
+  container.prepend(svgEl);
+
+  // Add legend
+  let legend = container.querySelector(".map-legend");
+  if (!legend) {
+    legend = document.createElement("div");
+    legend.className = "map-legend";
+    container.appendChild(legend);
+  }
+  const totalCountries = Object.keys(countryIsoMap).length;
+  legend.innerHTML = `
+    <span class="map-legend-dot" style="background:rgb(13,148,136)"></span>
+    <span>${totalCountries} source countries — darker = more materials</span>`;
+}
+
+function renderSupplyChainFallback() {
+  const container = $("#supply-map");
+  const mats = currentPhone.materials;
+
+  const countryMap = {};
+  mats.forEach((m) => {
+    const info = materials[m.id];
+    if (!info) return;
+    info.sources.forEach((s) => {
+      if (!countryMap[s.country]) {
+        countryMap[s.country] = { flag: s.flag, materials: new Set() };
+      }
+      countryMap[s.country].materials.add(info.name);
+    });
+  });
+
+  const countries = Object.entries(countryMap).sort(
+    (a, b) => b[1].materials.size - a[1].materials.size
+  );
+
+  container.innerHTML = `<div class="country-list-fallback">${countries
+    .map(
+      ([name, data]) => `
+    <div class="country-card">
+      <div class="country-flag">${data.flag}</div>
+      <div class="country-info">
+        <div class="country-name">${name}</div>
+        <div class="country-materials">${[...data.materials].join(", ")}</div>
+      </div>
+    </div>`
+    )
+    .join("")}</div>`;
 }
 
 // -------------------- Donut Chart --------------------
@@ -448,41 +607,6 @@ function renderMaterialCards() {
   });
 }
 
-// -------------------- Supply Chain --------------------
-function renderSupplyChain() {
-  const container = $("#country-list");
-  const mats = currentPhone.materials;
-
-  const countryMap = {};
-  mats.forEach((m) => {
-    const info = materials[m.id];
-    if (!info) return;
-    info.sources.forEach((s) => {
-      if (!countryMap[s.country]) {
-        countryMap[s.country] = { flag: s.flag, materials: new Set() };
-      }
-      countryMap[s.country].materials.add(info.name);
-    });
-  });
-
-  const countries = Object.entries(countryMap).sort(
-    (a, b) => b[1].materials.size - a[1].materials.size
-  );
-
-  container.innerHTML = countries
-    .map(
-      ([name, data]) => `
-    <div class="country-card">
-      <div class="country-flag">${data.flag}</div>
-      <div class="country-info">
-        <div class="country-name">${name}</div>
-        <div class="country-materials">${[...data.materials].join(", ")}</div>
-      </div>
-    </div>`
-    )
-    .join("");
-}
-
 // -------------------- Insights --------------------
 function renderInsights() {
   const container = $("#insight-cards");
@@ -572,4 +696,95 @@ function renderCompareView() {
       bar.style.width = bar.dataset.target + "%";
     });
   });
+}
+
+// ============================================================
+// Cumulative Footprint Calculator
+// ============================================================
+function renderCalculator() {
+  const section = $("#calculator-section");
+  const grid = $("#calc-grid");
+
+  section.classList.remove("hidden");
+
+  grid.innerHTML = phones
+    .map(
+      (p) => `
+    <label class="calc-phone" data-id="${p.id}">
+      <input type="checkbox" class="calc-check" value="${p.id}" />
+      <span class="calc-phone-name">${p.name}</span>
+      <span class="calc-phone-year">${p.year}</span>
+      <div class="calc-refurb-toggle">
+        <button class="calc-toggle-btn active" data-condition="new">New</button>
+        <button class="calc-toggle-btn" data-condition="refurb">Refurb</button>
+      </div>
+    </label>`
+    )
+    .join("");
+
+  // Toggle new/refurb
+  grid.querySelectorAll(".calc-toggle-btn").forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      const parent = btn.closest(".calc-refurb-toggle");
+      parent.querySelectorAll(".calc-toggle-btn").forEach((b) => b.classList.remove("active"));
+      btn.classList.add("active");
+      updateCalculator();
+    });
+  });
+
+  // Checkbox changes
+  grid.querySelectorAll(".calc-check").forEach((cb) => {
+    cb.addEventListener("change", updateCalculator);
+  });
+}
+
+function updateCalculator() {
+  const summary = $("#calc-summary");
+  const checked = $$("#calc-grid .calc-check:checked");
+
+  if (checked.length === 0) {
+    summary.classList.add("hidden");
+    return;
+  }
+  summary.classList.remove("hidden");
+
+  let totalCo2 = 0;
+  let totalWater = 0;
+  let totalRaw = 0;
+
+  checked.forEach((cb) => {
+    const phone = phones.find((p) => p.id === cb.value);
+    if (!phone) return;
+
+    const label = cb.closest(".calc-phone");
+    const isRefurb = label.querySelector('.calc-toggle-btn[data-condition="refurb"]').classList.contains("active");
+    const factor = isRefurb ? 0.2 : 1.0; // Refurbished = ~20% environmental cost
+
+    const stats = computePhoneStats(phone);
+    totalCo2 += phone.carbonFootprint * factor;
+    totalWater += stats.totalWater * factor;
+    totalRaw += stats.rawCost * factor;
+  });
+
+  $("#calc-co2").textContent = Math.round(totalCo2);
+  $("#calc-co2-equiv").textContent = `≈ ${Math.round(totalCo2 * 2.3)} miles driven`;
+
+  $("#calc-water").textContent = Math.round(totalWater).toLocaleString();
+  $("#calc-water-equiv").textContent = `≈ ${(totalWater / 300).toFixed(1)} bathtubs`;
+
+  $("#calc-raw").textContent = "$" + totalRaw.toFixed(2);
+  $("#calc-raw-equiv").textContent = "in raw minerals";
+
+  $("#calc-devices").textContent = checked.length;
+  const refurbCount = checked.filter((cb) => {
+    const label = cb.closest(".calc-phone");
+    return label.querySelector('.calc-toggle-btn[data-condition="refurb"]').classList.contains("active");
+  }).length;
+  const newCount = checked.length - refurbCount;
+  const parts = [];
+  if (newCount > 0) parts.push(`${newCount} new`);
+  if (refurbCount > 0) parts.push(`${refurbCount} refurbished`);
+  $("#calc-devices-equiv").textContent = parts.join(", ");
 }
