@@ -13,7 +13,6 @@ let mapSvgDoc = null; // cached SVG document
 // -------------------- Init --------------------
 document.addEventListener("DOMContentLoaded", () => {
   renderPhoneGrid();
-  renderCalculator();
   preloadMap();
   $("#back-btn").addEventListener("click", showSelector);
   $("#compare-btn").addEventListener("click", showCompare);
@@ -747,93 +746,3 @@ function renderCompareView() {
   });
 }
 
-// ============================================================
-// Cumulative Footprint Calculator
-// ============================================================
-function renderCalculator() {
-  const section = $("#calculator-section");
-  const grid = $("#calc-grid");
-
-  section.classList.remove("hidden");
-
-  grid.innerHTML = phones
-    .map(
-      (p) => `
-    <label class="calc-phone" data-id="${p.id}">
-      <input type="checkbox" class="calc-check" value="${p.id}" />
-      <span class="calc-phone-name">${p.name}</span>
-      <span class="calc-phone-year">${p.year}</span>
-      <div class="calc-refurb-toggle">
-        <button class="calc-toggle-btn active" data-condition="new">New</button>
-        <button class="calc-toggle-btn" data-condition="refurb">Refurb</button>
-      </div>
-    </label>`
-    )
-    .join("");
-
-  // Toggle new/refurb
-  grid.querySelectorAll(".calc-toggle-btn").forEach((btn) => {
-    btn.addEventListener("click", (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      const parent = btn.closest(".calc-refurb-toggle");
-      parent.querySelectorAll(".calc-toggle-btn").forEach((b) => b.classList.remove("active"));
-      btn.classList.add("active");
-      updateCalculator();
-    });
-  });
-
-  // Checkbox changes
-  grid.querySelectorAll(".calc-check").forEach((cb) => {
-    cb.addEventListener("change", updateCalculator);
-  });
-}
-
-function updateCalculator() {
-  const summary = $("#calc-summary");
-  const checked = $$("#calc-grid .calc-check:checked");
-
-  if (checked.length === 0) {
-    summary.classList.add("hidden");
-    return;
-  }
-  summary.classList.remove("hidden");
-
-  let totalCo2 = 0;
-  let totalWater = 0;
-  let totalRaw = 0;
-
-  checked.forEach((cb) => {
-    const phone = phones.find((p) => p.id === cb.value);
-    if (!phone) return;
-
-    const label = cb.closest(".calc-phone");
-    const isRefurb = label.querySelector('.calc-toggle-btn[data-condition="refurb"]').classList.contains("active");
-    const factor = isRefurb ? 0.2 : 1.0; // Refurbished = ~20% environmental cost
-
-    const stats = computePhoneStats(phone);
-    totalCo2 += phone.carbonFootprint * factor;
-    totalWater += stats.totalWater * factor;
-    totalRaw += stats.rawCost * factor;
-  });
-
-  $("#calc-co2").textContent = Math.round(totalCo2);
-  $("#calc-co2-equiv").textContent = `≈ ${Math.round(totalCo2 * 2.3)} miles driven`;
-
-  $("#calc-water").textContent = Math.round(totalWater).toLocaleString();
-  $("#calc-water-equiv").textContent = `≈ ${(totalWater / 300).toFixed(1)} bathtubs`;
-
-  $("#calc-raw").textContent = "$" + totalRaw.toFixed(2);
-  $("#calc-raw-equiv").textContent = "in raw minerals";
-
-  $("#calc-devices").textContent = checked.length;
-  const refurbCount = checked.filter((cb) => {
-    const label = cb.closest(".calc-phone");
-    return label.querySelector('.calc-toggle-btn[data-condition="refurb"]').classList.contains("active");
-  }).length;
-  const newCount = checked.length - refurbCount;
-  const parts = [];
-  if (newCount > 0) parts.push(`${newCount} new`);
-  if (refurbCount > 0) parts.push(`${refurbCount} refurbished`);
-  $("#calc-devices-equiv").textContent = parts.join(", ");
-}
