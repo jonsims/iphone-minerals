@@ -201,8 +201,17 @@ function renderStats() {
 
   // CO₂
   animateValue("stat-co2", currentPhone.carbonFootprint, (v) => Math.round(v));
-  const miles = Math.round(currentPhone.carbonFootprint * 2.3);
-  $("#stat-co2-equiv").textContent = `≈ ${miles} miles driven`;
+  const gallons = (currentPhone.carbonFootprint / 8.89).toFixed(1);
+  $("#stat-co2-equiv").textContent = `≈ ${gallons} gallons of gas burned`;
+
+  // Source citation
+  const sourceEl = $("#stat-co2-source");
+  if (sourceEl && currentPhone.carbonSourceUrl) {
+    sourceEl.innerHTML = `<a href="${currentPhone.carbonSourceUrl}" target="_blank" rel="noopener">Source: ${currentPhone.carbonSource}</a>`;
+    sourceEl.classList.remove("hidden");
+  } else if (sourceEl) {
+    sourceEl.classList.add("hidden");
+  }
 
   // Water
   animateValue("stat-water", stats.totalWater, (v) =>

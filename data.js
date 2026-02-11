@@ -365,6 +365,8 @@ export const phones = [
     batteryWh: 10.35,
     retailPrice: 999,
     carbonFootprint: 79,
+    carbonSource: "Apple iPhone X PER (Sept 2017)",
+    carbonSourceUrl: "https://www.apple.com/environment/pdf/products/iphone/iPhone_X_PER_sept2017.pdf",
     changes: [
       { text: "First iPhone with OLED display and Face ID", direction: "neutral" },
       { text: "Stainless steel frame replaced aluminum on flagship", direction: "neutral" },
@@ -398,6 +400,8 @@ export const phones = [
     batteryWh: 11.16,
     retailPrice: 749,
     carbonFootprint: 62,
+    carbonSource: "Apple iPhone XR PER (Sept 2018)",
+    carbonSourceUrl: "https://www.apple.com/environment/pdf/products/iphone/iPhone_XR_PER_sept2018.pdf",
     changes: [
       { text: "Aluminum frame reduces titanium/steel demand", direction: "improved" },
       { text: "LCD display uses less indium than OLED", direction: "improved" },
@@ -433,6 +437,8 @@ export const phones = [
     batteryWh: 10.13,
     retailPrice: 999,
     carbonFootprint: 70,
+    carbonSource: "Apple iPhone XS PER (Sept 2018)",
+    carbonSourceUrl: "https://www.apple.com/environment/pdf/products/iphone/iPhone_XS_PER_sept2018.pdf",
     changes: [
       { text: "Improved water resistance (IP68)", direction: "neutral" },
       { text: "A12 chip is more energy-efficient than A11", direction: "improved" },
@@ -465,7 +471,9 @@ export const phones = [
     chip: "A13 Bionic",
     batteryWh: 11.91,
     retailPrice: 699,
-    carbonFootprint: 72,
+    carbonFootprint: 70,
+    carbonSource: "Apple iPhone 11 PER (Sept 2019)",
+    carbonSourceUrl: "https://www.apple.com/environment/pdf/products/iphone/iPhone_11_PER_sept2019.pdf",
     changes: [
       { text: "Larger battery capacity (+7%) increases mineral demand", direction: "neutral" },
       { text: "100% recycled rare earths in Taptic Engine", direction: "improved" },
@@ -500,6 +508,8 @@ export const phones = [
     batteryWh: 15.04,
     retailPrice: 999,
     carbonFootprint: 80,
+    carbonSource: "Apple iPhone 11 Pro PER (Sept 2019)",
+    carbonSourceUrl: "https://www.apple.com/environment/pdf/products/iphone/iPhone_11_Pro_PER_sept2019.pdf",
     changes: [
       { text: "Significantly larger battery (15 Wh) increases cobalt content", direction: "neutral" },
       { text: "100% recycled rare earths in Taptic Engine", direction: "improved" },
@@ -533,7 +543,9 @@ export const phones = [
     chip: "A14 Bionic",
     batteryWh: 10.78,
     retailPrice: 799,
-    carbonFootprint: 70,
+    carbonFootprint: 68,
+    carbonSource: "Apple iPhone 12 PER (Oct 2020)",
+    carbonSourceUrl: "https://www.apple.com/environment/pdf/products/iphone/iPhone_12_PER_oct2020.pdf",
     changes: [
       { text: "First 5G iPhone — new rare earth magnets for MagSafe", direction: "neutral" },
       { text: "Ceramic Shield glass introduced (nano-ceramic crystals)", direction: "neutral" },
@@ -569,6 +581,8 @@ export const phones = [
     batteryWh: 10.78,
     retailPrice: 999,
     carbonFootprint: 82,
+    carbonSource: "Apple iPhone 12 Pro PER (Oct 2020)",
+    carbonSourceUrl: "https://www.apple.com/environment/pdf/products/iphone/iPhone_12_Pro_PER_oct2020.pdf",
     changes: [
       { text: "LiDAR scanner adds new sensor components", direction: "neutral" },
       { text: "5G modem increases rare earth and copper demand", direction: "neutral" },
@@ -603,6 +617,8 @@ export const phones = [
     batteryWh: 12.41,
     retailPrice: 799,
     carbonFootprint: 64,
+    carbonSource: "Apple iPhone 13 PER (Sept 2021)",
+    carbonSourceUrl: "https://www.apple.com/environment/pdf/products/iphone/iPhone_13_PER_sept2021.pdf",
     changes: [
       { text: "Cobalt reduced ~15% vs iPhone 12 through chemistry changes", direction: "improved" },
       { text: "Antenna lines use recycled plastic", direction: "improved" },
@@ -638,6 +654,8 @@ export const phones = [
     batteryWh: 11.97,
     retailPrice: 999,
     carbonFootprint: 69,
+    carbonSource: "Apple iPhone 13 Pro PER (Sept 2021)",
+    carbonSourceUrl: "https://www.apple.com/environment/pdf/products/iphone/iPhone_13_Pro_PER_sept2021.pdf",
     changes: [
       { text: "ProMotion 120Hz display — LTPO technology more efficient", direction: "improved" },
       { text: "100% recycled tin in solder of main logic board", direction: "improved" },
@@ -672,6 +690,8 @@ export const phones = [
     batteryWh: 12.68,
     retailPrice: 799,
     carbonFootprint: 61,
+    carbonSource: "Apple iPhone 14 PER (Sept 2022)",
+    carbonSourceUrl: "https://www.apple.com/environment/pdf/products/iphone/iPhone_14_PER_sept2022.pdf",
     changes: [
       { text: "Removable back glass improves repairability", direction: "improved" },
       { text: "Cobalt reduced further (-13% vs iPhone 13)", direction: "improved" },
@@ -707,6 +727,8 @@ export const phones = [
     batteryWh: 12.38,
     retailPrice: 999,
     carbonFootprint: 65,
+    carbonSource: "Apple iPhone 14 Pro PER (Sept 2022)",
+    carbonSourceUrl: "https://www.apple.com/environment/pdf/products/iphone/iPhone_14_Pro_PER_sept2022.pdf",
     changes: [
       { text: "Dynamic Island replaces notch — reduces display waste", direction: "improved" },
       { text: "A16 chip uses 2nd-gen 5nm (more efficient)", direction: "improved" },
@@ -741,6 +763,8 @@ export const phones = [
     batteryWh: 12.98,
     retailPrice: 799,
     carbonFootprint: 56,
+    carbonSource: "Apple iPhone 15 PER (Sept 2023)",
+    carbonSourceUrl: "https://www.apple.com/environment/pdf/products/iphone/iPhone_15_PER_sept2023.pdf",
     changes: [
       { text: "USB-C replaces Lightning — universal standard reduces e-waste", direction: "improved" },
       { text: "75% recycled aluminum in enclosure", direction: "improved" },
@@ -775,7 +799,9 @@ export const phones = [
     chip: "A17 Pro",
     batteryWh: 12.74,
     retailPrice: 999,
-    carbonFootprint: 56,
+    carbonFootprint: 65,
+    carbonSource: "Apple iPhone 15 Pro PER (Sept 2023)",
+    carbonSourceUrl: "https://www.apple.com/environment/pdf/products/iphone/iPhone_15_Pro_PER_sept2023.pdf",
     changes: [
       { text: "Titanium frame replaces stainless steel — 19g lighter", direction: "improved" },
       { text: "100% recycled cobalt in battery", direction: "improved" },
@@ -813,6 +839,8 @@ export const phones = [
     batteryWh: 13.56,
     retailPrice: 799,
     carbonFootprint: 56,
+    carbonSource: "Apple iPhone 16 PER (Sept 2024)",
+    carbonSourceUrl: "https://www.apple.com/environment/pdf/products/iphone/iPhone_16_PER_sept2024.pdf",
     changes: [
       { text: "85%+ recycled metals across main logic board", direction: "improved" },
       { text: "100% recycled cobalt in battery (continued)", direction: "improved" },
@@ -847,7 +875,9 @@ export const phones = [
     chip: "A18 Pro",
     batteryWh: 14.06,
     retailPrice: 999,
-    carbonFootprint: 56,
+    carbonFootprint: 61,
+    carbonSource: "Apple iPhone 16 Pro PER (Sept 2024)",
+    carbonSourceUrl: "https://www.apple.com/environment/pdf/products/iphone/iPhone_16_Pro_PER_sept2024.pdf",
     changes: [
       { text: "100% recycled gold in plating of all printed circuit boards", direction: "improved" },
       { text: "100% recycled cobalt, 100% recycled lithium in battery", direction: "improved" },
@@ -883,10 +913,12 @@ export const phones = [
     chip: "A19",
     batteryWh: 14.5,
     retailPrice: 799,
-    carbonFootprint: 52,
+    carbonFootprint: 55,
+    carbonSource: "Apple iPhone 17 PER (Sept 2025)",
+    carbonSourceUrl: "https://www.apple.com/environment/pdf/products/iphone/iPhone_17_PER_Sept2025.pdf",
     changes: [
       { text: "ProMotion 120Hz comes to standard model for first time", direction: "improved" },
-      { text: "Further carbon footprint reduction to ~52 kg CO2", direction: "improved" },
+      { text: "Further carbon footprint reduction to ~55 kg CO2", direction: "improved" },
       { text: "Over 90% recycled metals across logic board", direction: "improved" },
       { text: "Cobalt per phone at all-time low for standard model", direction: "improved" },
     ],
@@ -919,7 +951,9 @@ export const phones = [
     chip: "A19 Pro",
     batteryWh: 15.0,
     retailPrice: 1099,
-    carbonFootprint: 54,
+    carbonFootprint: 64,
+    carbonSource: "Apple iPhone 17 Pro PER (Sept 2025)",
+    carbonSourceUrl: "https://www.apple.com/environment/pdf/products/iphone/iPhone_17_Pro_and_iPhone_17_Pro_Max_PER_Sept2025.pdf",
     changes: [
       { text: "Titanium-aluminum composite frame reduces weight vs pure titanium", direction: "improved" },
       { text: "100% recycled cobalt, lithium, gold, copper, and tin", direction: "improved" },

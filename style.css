@@ -413,6 +413,22 @@ h1 .accent {
   font-style: italic;
 }
 
+.stat-source {
+  font-size: 0.62rem;
+  margin-top: 0.3rem;
+}
+
+.stat-source a {
+  color: var(--text-dim);
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-underline-offset: 2px;
+}
+
+.stat-source a:hover {
+  color: var(--accent);
+}
+
 /* ---------- Price Gap Visual ---------- */
 #price-gap-section {
   margin-bottom: 3rem;
