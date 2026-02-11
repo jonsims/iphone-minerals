@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>What's Inside Your iPhone?</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- ====== HERO / MODEL SELECTOR ====== -->
+    <section id="hero">
+      <div class="hero-content">
+        <h1>What's Inside Your iPhone<span class="accent">?</span></h1>
+        <p class="subtitle">
+          Every iPhone contains dozens of elements mined from across the globe.
+          Select your model to explore the hidden supply chain in your pocket.
+        </p>
+      </div>
+
+      <div id="phone-selector">
+        <div class="selector-label">Select your iPhone</div>
+        <div id="phone-grid"></div>
+      </div>
+    </section>
+
+    <!-- ====== MAIN DETAIL VIEW (hidden until selection) ====== -->
+    <main id="detail" class="hidden">
+      <!-- Back button -->
+      <button id="back-btn" aria-label="Back to model selector">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <path
+            d="M12.5 15L7.5 10L12.5 5"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+        All Models
+      </button>
+
+      <!-- Phone info header -->
+      <header id="phone-header">
+        <div class="phone-title">
+          <h2 id="phone-name"></h2>
+          <div class="phone-meta">
+            <span id="phone-year" class="badge"></span>
+            <span id="phone-frame" class="badge"></span>
+            <span id="phone-chip" class="badge"></span>
+            <span id="phone-weight" class="badge"></span>
+          </div>
+        </div>
+      </header>
+
+      <!-- Key stats row -->
+      <section id="stats-row">
+        <div class="stat-card">
+          <div class="stat-value" id="stat-raw-cost">—</div>
+          <div class="stat-label">Raw Material Cost</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="stat-retail">—</div>
+          <div class="stat-label">Retail Price</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="stat-markup">—</div>
+          <div class="stat-label">Price Multiplier</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="stat-co2">—</div>
+          <div class="stat-label">kg CO₂ Lifecycle</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="stat-water">—</div>
+          <div class="stat-label">Liters of Water</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="stat-countries">—</div>
+          <div class="stat-label">Source Countries</div>
+        </div>
+      </section>
+
+      <!-- Two-column: donut chart + material bars -->
+      <section id="composition-section">
+        <div id="chart-container">
+          <h3>Material Composition</h3>
+          <div id="donut-wrap">
+            <svg id="donut-chart" viewBox="0 0 200 200"></svg>
+            <div id="donut-center">
+              <span id="donut-center-value"></span>
+              <span id="donut-center-label"></span>
+            </div>
+          </div>
+          <div id="chart-legend"></div>
+        </div>
+        <div id="bars-container">
+          <h3>By Weight <span class="h3-sub">(grams)</span></h3>
+          <div id="material-bars"></div>
+        </div>
+      </section>
+
+      <!-- Material detail cards -->
+      <section id="materials-section">
+        <h3>Material Deep Dive</h3>
+        <p class="section-desc">
+          Click any material to learn where it comes from, what it costs to
+          mine, and its ecological footprint.
+        </p>
+        <div id="material-cards"></div>
+      </section>
+
+      <!-- Supply chain summary -->
+      <section id="supply-chain-section">
+        <h3>Global Supply Chain</h3>
+        <p class="section-desc">
+          Your iPhone's materials travel through a complex global network before
+          reaching your hands.
+        </p>
+        <div id="country-list"></div>
+      </section>
+
+      <!-- Insight cards -->
+      <section id="insights-section">
+        <h3>Things to Think About</h3>
+        <div id="insight-cards"></div>
+      </section>
+
+      <!-- Data sources -->
+      <footer id="sources">
+        <h4>Data Sources & Notes</h4>
+        <p>
+          Material compositions are estimates based on
+          <a
+            href="https://www.apple.com/environment/"
+            target="_blank"
+            rel="noopener"
+            >Apple Environmental Progress Reports</a
+          >,
+          <a href="https://www.ifixit.com" target="_blank" rel="noopener"
+            >iFixit teardowns</a
+          >,
+          <a href="https://www.usgs.gov/centers/national-minerals-information-center" target="_blank" rel="noopener"
+            >USGS Mineral Commodity Summaries</a
+          >, and published lifecycle assessment studies. Commodity prices are
+          approximate 2024 market averages. Ecological data drawn from
+          peer-reviewed LCA literature. Figures are approximate and intended for
+          educational purposes.
+        </p>
+      </footer>
+    </main>
+
+    <script type="module" src="app.js"></script>
+  </body>
+</html>
