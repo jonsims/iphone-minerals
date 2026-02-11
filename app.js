@@ -213,11 +213,11 @@ function renderStats() {
     sourceEl.classList.add("hidden");
   }
 
-  // Water
-  animateValue("stat-water", stats.totalWater, (v) =>
+  // Water (lifecycle — includes chip fab, manufacturing, not just material extraction)
+  animateValue("stat-water", currentPhone.waterFootprint, (v) =>
     Math.round(v).toLocaleString()
   );
-  const bathtubs = (stats.totalWater / 300).toFixed(1);
+  const bathtubs = (currentPhone.waterFootprint / 300).toFixed(1);
   $("#stat-water-equiv").textContent = `≈ ${bathtubs} bathtubs`;
 
   // Countries
@@ -696,7 +696,7 @@ function renderCompareView() {
       title: "Water Usage",
       unit: "liters",
       color: "#0d9488",
-      getValue: (p) => computePhoneStats(p).totalWater,
+      getValue: (p) => p.waterFootprint,
     },
     {
       title: "Raw Material Cost",

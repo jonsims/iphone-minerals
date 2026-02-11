@@ -365,6 +365,7 @@ export const phones = [
     batteryWh: 10.35,
     retailPrice: 999,
     carbonFootprint: 79,
+    waterFootprint: 15500,
     carbonSource: "Apple iPhone X PER (Sept 2017)",
     carbonSourceUrl: "https://www.apple.com/environment/pdf/products/iphone/iPhone_X_PER_sept2017.pdf",
     changes: [
@@ -400,6 +401,7 @@ export const phones = [
     batteryWh: 11.16,
     retailPrice: 749,
     carbonFootprint: 62,
+    waterFootprint: 12200,
     carbonSource: "Apple iPhone XR PER (Sept 2018)",
     carbonSourceUrl: "https://www.apple.com/environment/pdf/products/iphone/iPhone_XR_PER_sept2018.pdf",
     changes: [
@@ -437,6 +439,7 @@ export const phones = [
     batteryWh: 10.13,
     retailPrice: 999,
     carbonFootprint: 70,
+    waterFootprint: 13700,
     carbonSource: "Apple iPhone XS PER (Sept 2018)",
     carbonSourceUrl: "https://www.apple.com/environment/pdf/products/iphone/iPhone_XS_PER_sept2018.pdf",
     changes: [
@@ -472,6 +475,7 @@ export const phones = [
     batteryWh: 11.91,
     retailPrice: 699,
     carbonFootprint: 70,
+    waterFootprint: 13700,
     carbonSource: "Apple iPhone 11 PER (Sept 2019)",
     carbonSourceUrl: "https://www.apple.com/environment/pdf/products/iphone/iPhone_11_PER_sept2019.pdf",
     changes: [
@@ -508,6 +512,7 @@ export const phones = [
     batteryWh: 15.04,
     retailPrice: 999,
     carbonFootprint: 80,
+    waterFootprint: 15700,
     carbonSource: "Apple iPhone 11 Pro PER (Sept 2019)",
     carbonSourceUrl: "https://www.apple.com/environment/pdf/products/iphone/iPhone_11_Pro_PER_sept2019.pdf",
     changes: [
@@ -544,6 +549,7 @@ export const phones = [
     batteryWh: 10.78,
     retailPrice: 799,
     carbonFootprint: 68,
+    waterFootprint: 13300,
     carbonSource: "Apple iPhone 12 PER (Oct 2020)",
     carbonSourceUrl: "https://www.apple.com/environment/pdf/products/iphone/iPhone_12_PER_oct2020.pdf",
     changes: [
@@ -581,6 +587,7 @@ export const phones = [
     batteryWh: 10.78,
     retailPrice: 999,
     carbonFootprint: 82,
+    waterFootprint: 16100,
     carbonSource: "Apple iPhone 12 Pro PER (Oct 2020)",
     carbonSourceUrl: "https://www.apple.com/environment/pdf/products/iphone/iPhone_12_Pro_PER_oct2020.pdf",
     changes: [
@@ -617,6 +624,7 @@ export const phones = [
     batteryWh: 12.41,
     retailPrice: 799,
     carbonFootprint: 64,
+    waterFootprint: 12600,
     carbonSource: "Apple iPhone 13 PER (Sept 2021)",
     carbonSourceUrl: "https://www.apple.com/environment/pdf/products/iphone/iPhone_13_PER_sept2021.pdf",
     changes: [
@@ -654,6 +662,7 @@ export const phones = [
     batteryWh: 11.97,
     retailPrice: 999,
     carbonFootprint: 69,
+    waterFootprint: 13500,
     carbonSource: "Apple iPhone 13 Pro PER (Sept 2021)",
     carbonSourceUrl: "https://www.apple.com/environment/pdf/products/iphone/iPhone_13_Pro_PER_sept2021.pdf",
     changes: [
@@ -690,6 +699,7 @@ export const phones = [
     batteryWh: 12.68,
     retailPrice: 799,
     carbonFootprint: 61,
+    waterFootprint: 12000,
     carbonSource: "Apple iPhone 14 PER (Sept 2022)",
     carbonSourceUrl: "https://www.apple.com/environment/pdf/products/iphone/iPhone_14_PER_sept2022.pdf",
     changes: [
@@ -727,6 +737,7 @@ export const phones = [
     batteryWh: 12.38,
     retailPrice: 999,
     carbonFootprint: 65,
+    waterFootprint: 12800,
     carbonSource: "Apple iPhone 14 Pro PER (Sept 2022)",
     carbonSourceUrl: "https://www.apple.com/environment/pdf/products/iphone/iPhone_14_Pro_PER_sept2022.pdf",
     changes: [
@@ -763,6 +774,7 @@ export const phones = [
     batteryWh: 12.98,
     retailPrice: 799,
     carbonFootprint: 56,
+    waterFootprint: 11000,
     carbonSource: "Apple iPhone 15 PER (Sept 2023)",
     carbonSourceUrl: "https://www.apple.com/environment/pdf/products/iphone/iPhone_15_PER_sept2023.pdf",
     changes: [
@@ -800,6 +812,7 @@ export const phones = [
     batteryWh: 12.74,
     retailPrice: 999,
     carbonFootprint: 65,
+    waterFootprint: 12800,
     carbonSource: "Apple iPhone 15 Pro PER (Sept 2023)",
     carbonSourceUrl: "https://www.apple.com/environment/pdf/products/iphone/iPhone_15_Pro_PER_sept2023.pdf",
     changes: [
@@ -839,6 +852,7 @@ export const phones = [
     batteryWh: 13.56,
     retailPrice: 799,
     carbonFootprint: 56,
+    waterFootprint: 11000,
     carbonSource: "Apple iPhone 16 PER (Sept 2024)",
     carbonSourceUrl: "https://www.apple.com/environment/pdf/products/iphone/iPhone_16_PER_sept2024.pdf",
     changes: [
@@ -876,6 +890,7 @@ export const phones = [
     batteryWh: 14.06,
     retailPrice: 999,
     carbonFootprint: 61,
+    waterFootprint: 12000,
     carbonSource: "Apple iPhone 16 Pro PER (Sept 2024)",
     carbonSourceUrl: "https://www.apple.com/environment/pdf/products/iphone/iPhone_16_Pro_PER_sept2024.pdf",
     changes: [
@@ -914,6 +929,7 @@ export const phones = [
     batteryWh: 14.5,
     retailPrice: 799,
     carbonFootprint: 55,
+    waterFootprint: 10800,
     carbonSource: "Apple iPhone 17 PER (Sept 2025)",
     carbonSourceUrl: "https://www.apple.com/environment/pdf/products/iphone/iPhone_17_PER_Sept2025.pdf",
     changes: [
@@ -952,6 +968,7 @@ export const phones = [
     batteryWh: 15.0,
     retailPrice: 1099,
     carbonFootprint: 64,
+    waterFootprint: 12600,
     carbonSource: "Apple iPhone 17 Pro PER (Sept 2025)",
     carbonSourceUrl: "https://www.apple.com/environment/pdf/products/iphone/iPhone_17_Pro_and_iPhone_17_Pro_Max_PER_Sept2025.pdf",
     changes: [
