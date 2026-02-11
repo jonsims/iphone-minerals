@@ -336,7 +336,8 @@ function renderMap() {
   const maxMats = Math.max(...Object.values(countryIsoMap).map((c) => c.materials.size));
 
   svgEl.querySelectorAll("path").forEach((path) => {
-    const id = path.getAttribute("id");
+    // ID may be on the path itself or on a parent <g> element
+    const id = path.getAttribute("id") || (path.parentElement && path.parentElement.getAttribute("id"));
     if (countryIsoMap[id]) {
       const data = countryIsoMap[id];
       const intensity = data.materials.size / maxMats;
