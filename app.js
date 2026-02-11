@@ -155,7 +155,7 @@ function renderDetail() {
   renderHeader();
   renderEvolution();
   renderStats();
-  renderPriceGap();
+  renderLifecycleBreakdown();
   renderEcoFootprint();
   renderMap();
   renderDonut();
@@ -240,26 +240,89 @@ function renderStats() {
   $("#stat-markup-equiv").textContent = "materials → retail";
 }
 
-// -------------------- Price Gap Visual --------------------
-function renderPriceGap() {
+// -------------------- Lifecycle Breakdown --------------------
+function renderLifecycleBreakdown() {
   const stats = computePhoneStats(currentPhone);
-  const retail = currentPhone.retailPrice;
-  const raw = stats.rawCost;
-  const rawPct = Math.max((raw / retail) * 100, 0.5); // min 0.5% so it's visible
+  const phone = currentPhone;
 
-  $("#price-gap").innerHTML = `
-    <div class="price-gap-bar">
-      <div class="price-gap-raw" style="width:${rawPct}%">
-        <span class="price-gap-label-inner">$${raw.toFixed(2)}</span>
+  // --- CO2 ---
+  const matCo2 = stats.totalCo2Materials;
+  const mfgCo2 = phone.carbonFootprint - matCo2;
+  const co2Pct = Math.max((matCo2 / phone.carbonFootprint) * 100, 1);
+
+  $("#breakdown-co2-total").textContent = `(${phone.carbonFootprint} kg total)`;
+  $("#breakdown-co2-bar").innerHTML = `
+    <div class="breakdown-bar">
+      <div class="breakdown-seg breakdown-seg-extract" style="width:${co2Pct}%">
+        <span class="breakdown-seg-label">${matCo2.toFixed(1)} kg</span>
       </div>
-      <div class="price-gap-rest">
-        <span class="price-gap-label-inner">$${(retail - raw).toFixed(0)}</span>
+      <div class="breakdown-seg breakdown-seg-mfg">
+        <span class="breakdown-seg-label">${mfgCo2.toFixed(1)} kg</span>
       </div>
     </div>
-    <div class="price-gap-labels">
-      <span>Raw Materials</span>
-      <span>R&amp;D, Manufacturing, Software, Marketing, Logistics, Profit</span>
+    <div class="breakdown-bar-labels">
+      <span>Material Extraction</span>
+      <span>Manufacturing &amp; Use</span>
     </div>`;
+  const co2RealPct = ((matCo2 / phone.carbonFootprint) * 100).toFixed(1);
+  $("#breakdown-co2-note").textContent =
+    `Material extraction accounts for ${co2RealPct}% of lifecycle CO\u2082`;
+
+  // --- Water ---
+  const matWater = stats.totalWater;
+  const mfgWater = phone.waterFootprint - matWater;
+  const waterPct = Math.max((matWater / phone.waterFootprint) * 100, 1);
+
+  $("#breakdown-water-total").textContent =
+    `(${phone.waterFootprint.toLocaleString()} L total)`;
+  $("#breakdown-water-bar").innerHTML = `
+    <div class="breakdown-bar">
+      <div class="breakdown-seg breakdown-seg-extract" style="width:${waterPct}%">
+        <span class="breakdown-seg-label">${Math.round(matWater)} L</span>
+      </div>
+      <div class="breakdown-seg breakdown-seg-mfg">
+        <span class="breakdown-seg-label">${mfgWater.toLocaleString()} L</span>
+      </div>
+    </div>
+    <div class="breakdown-bar-labels">
+      <span>Material Extraction</span>
+      <span>Manufacturing &amp; Use</span>
+    </div>`;
+  const waterRealPct = ((matWater / phone.waterFootprint) * 100).toFixed(1);
+  $("#breakdown-water-note").textContent =
+    `Material extraction accounts for just ${waterRealPct}% of lifecycle water`;
+
+  // --- Cost (three segments) ---
+  const rawCost = stats.rawCost;
+  const bomCost = phone.bomCost;
+  const retail = phone.retailPrice;
+  const mfgCost = bomCost - rawCost;
+  const otherCost = retail - bomCost;
+
+  const rawPct = Math.max((rawCost / retail) * 100, 1);
+  const bomPct = (mfgCost / retail) * 100;
+
+  $("#breakdown-cost-total").textContent = `($${retail} retail)`;
+  $("#breakdown-cost-bar").innerHTML = `
+    <div class="breakdown-bar">
+      <div class="breakdown-seg breakdown-seg-extract" style="width:${rawPct}%">
+        <span class="breakdown-seg-label">$${rawCost.toFixed(2)}</span>
+      </div>
+      <div class="breakdown-seg breakdown-seg-bom" style="width:${bomPct}%">
+        <span class="breakdown-seg-label">$${Math.round(mfgCost)}</span>
+      </div>
+      <div class="breakdown-seg breakdown-seg-other">
+        <span class="breakdown-seg-label">$${Math.round(otherCost)}</span>
+      </div>
+    </div>
+    <div class="breakdown-bar-labels breakdown-bar-labels-3">
+      <span>Raw Materials</span>
+      <span>Components &amp; Assembly</span>
+      <span>R&amp;D, Software, Marketing, Profit</span>
+    </div>`;
+  const costRealPct = ((rawCost / retail) * 100).toFixed(1);
+  $("#breakdown-cost-note").textContent =
+    `Raw minerals cost just $${rawCost.toFixed(2)} — only ${costRealPct}% of the $${retail} retail price`;
 }
 
 // -------------------- Environmental Footprint --------------------
@@ -710,11 +773,64 @@ function renderCompareView() {
       color: "#7c3aed",
       getValue: (p) => p.retailPrice,
     },
+    {
+      title: "CO\u2082: Extraction vs Manufacturing",
+      unit: "kg CO\u2082",
+      color: "#e11d48",
+      isStacked: true,
+      getValues: (p) => {
+        const s = computePhoneStats(p);
+        return {
+          extraction: s.totalCo2Materials,
+          manufacturing: p.carbonFootprint - s.totalCo2Materials,
+          total: p.carbonFootprint,
+        };
+      },
+    },
   ];
 
   const container = $("#compare-charts");
   container.innerHTML = metrics
     .map((metric) => {
+      if (metric.isStacked) {
+        const data = phones.map((p) => ({
+          id: p.id,
+          name: p.name,
+          ...metric.getValues(p),
+          isCurrent: p.id === currentPhone.id,
+        }));
+        data.sort((a, b) => b.total - a.total);
+        const maxVal = data[0]?.total || 1;
+
+        const bars = data
+          .map((d) => {
+            const totalPct = (d.total / maxVal) * 100;
+            const extPct = (d.extraction / d.total) * 100;
+            return `
+          <div class="cmp-row ${d.isCurrent ? "cmp-highlight" : ""}">
+            <span class="cmp-label">${d.name}</span>
+            <div class="cmp-track">
+              <div class="cmp-fill-stacked" style="width:0%" data-target="${totalPct}">
+                <div class="cmp-fill-ext" style="width:${extPct}%"></div>
+                <div class="cmp-fill-mfg" style="flex:1"></div>
+              </div>
+            </div>
+            <span class="cmp-value">${d.extraction.toFixed(1)} / ${d.manufacturing.toFixed(0)}</span>
+          </div>`;
+          })
+          .join("");
+
+        return `
+        <div class="cmp-chart">
+          <h3>${metric.title} <span class="h3-sub">(${metric.unit})</span></h3>
+          <div class="cmp-legend">
+            <span class="cmp-legend-item"><span class="cmp-legend-dot" style="background:var(--accent2)"></span>Extraction</span>
+            <span class="cmp-legend-item"><span class="cmp-legend-dot" style="background:rgba(0,0,0,0.12)"></span>Manufacturing</span>
+          </div>
+          ${bars}
+        </div>`;
+      }
+
       const data = phones.map((p) => ({
         id: p.id,
         name: p.name,
@@ -750,6 +866,9 @@ function renderCompareView() {
   // Animate comparison bars
   requestAnimationFrame(() => {
     container.querySelectorAll(".cmp-fill").forEach((bar) => {
+      bar.style.width = bar.dataset.target + "%";
+    });
+    container.querySelectorAll(".cmp-fill-stacked").forEach((bar) => {
       bar.style.width = bar.dataset.target + "%";
     });
   });

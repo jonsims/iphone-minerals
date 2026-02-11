@@ -429,54 +429,113 @@ h1 .accent {
   color: var(--accent);
 }
 
-/* ---------- Price Gap Visual ---------- */
-#price-gap-section {
+/* ---------- Lifecycle Breakdown ---------- */
+#lifecycle-breakdown-section {
   margin-bottom: 3rem;
 }
 
-.price-gap-bar {
+.breakdown-metric {
+  margin-bottom: 1.8rem;
+}
+
+.breakdown-metric:last-child {
+  margin-bottom: 0;
+}
+
+.breakdown-metric h4 {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-bright);
+  margin-bottom: 0.5rem;
+}
+
+.breakdown-total {
+  font-weight: 400;
+  font-size: 0.8rem;
+  color: var(--text-dim);
+}
+
+.breakdown-bar {
   display: flex;
   height: 48px;
   border-radius: 8px;
   overflow: hidden;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.4rem;
 }
 
-.price-gap-raw {
-  background: var(--accent2);
+.breakdown-seg {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-width: 50px;
   transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.price-gap-rest {
-  background: rgba(0, 0, 0, 0.06);
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.price-gap-label-inner {
-  font-size: 0.82rem;
+.breakdown-seg-label {
+  font-size: 0.78rem;
   font-weight: 600;
+  white-space: nowrap;
 }
 
-.price-gap-raw .price-gap-label-inner {
+.breakdown-seg-extract {
+  background: var(--accent2);
+  min-width: 48px;
+}
+
+.breakdown-seg-extract .breakdown-seg-label {
   color: #fff;
 }
 
-.price-gap-rest .price-gap-label-inner {
+.breakdown-seg-mfg {
+  background: rgba(0, 0, 0, 0.06);
+  flex: 1;
+}
+
+.breakdown-seg-mfg .breakdown-seg-label {
   color: var(--text-dim);
 }
 
-.price-gap-labels {
+.breakdown-seg-bom {
+  background: var(--accent3);
+  min-width: 60px;
+}
+
+.breakdown-seg-bom .breakdown-seg-label {
+  color: #fff;
+}
+
+.breakdown-seg-other {
+  background: rgba(0, 0, 0, 0.06);
+  flex: 1;
+}
+
+.breakdown-seg-other .breakdown-seg-label {
+  color: var(--text-dim);
+}
+
+.breakdown-bar-labels {
   display: flex;
   justify-content: space-between;
   font-size: 0.72rem;
   color: var(--text-dim);
+}
+
+.breakdown-bar-labels-3 span {
+  flex: 1;
+}
+
+.breakdown-bar-labels-3 span:nth-child(2) {
+  text-align: center;
+}
+
+.breakdown-bar-labels-3 span:last-child {
+  text-align: right;
+}
+
+.breakdown-annotation {
+  font-size: 0.78rem;
+  color: var(--text-dim);
+  font-style: italic;
+  margin-top: 0.3rem;
 }
 
 /* ---------- Environmental Footprint ---------- */
@@ -786,6 +845,45 @@ h1 .accent {
   border-radius: 4px;
   transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
   min-width: 2px;
+}
+
+.cmp-fill-stacked {
+  display: flex;
+  height: 100%;
+  border-radius: 4px;
+  overflow: hidden;
+  transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  min-width: 2px;
+}
+
+.cmp-fill-ext {
+  background: var(--accent2);
+  min-width: 2px;
+}
+
+.cmp-fill-mfg {
+  background: rgba(0, 0, 0, 0.10);
+}
+
+.cmp-legend {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 0.6rem;
+  font-size: 0.72rem;
+  color: var(--text-dim);
+}
+
+.cmp-legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.cmp-legend-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
 }
 
 .cmp-value {

@@ -99,14 +99,29 @@
           </div>
         </section>
 
-        <section id="price-gap-section">
-          <h3>Where Does the Money Go?</h3>
+        <section id="lifecycle-breakdown-section">
+          <h3>Lifecycle Breakdown</h3>
           <p class="section-desc">
-            The raw materials in your phone are worth almost nothing compared to
-            the retail price. The gap represents R&amp;D, manufacturing, software,
-            marketing, logistics, and profit.
+            Material extraction &mdash; mining and refining raw minerals &mdash;
+            is just a fraction of your iPhone's total environmental and economic
+            footprint. The vast majority comes from chip fabrication, component
+            manufacturing, assembly, and transportation.
           </p>
-          <div id="price-gap"></div>
+          <div class="breakdown-metric">
+            <h4>CO&#8322; Emissions <span class="breakdown-total" id="breakdown-co2-total"></span></h4>
+            <div id="breakdown-co2-bar"></div>
+            <div class="breakdown-annotation" id="breakdown-co2-note"></div>
+          </div>
+          <div class="breakdown-metric">
+            <h4>Water Usage <span class="breakdown-total" id="breakdown-water-total"></span></h4>
+            <div id="breakdown-water-bar"></div>
+            <div class="breakdown-annotation" id="breakdown-water-note"></div>
+          </div>
+          <div class="breakdown-metric">
+            <h4>Cost Breakdown <span class="breakdown-total" id="breakdown-cost-total"></span></h4>
+            <div id="breakdown-cost-bar"></div>
+            <div class="breakdown-annotation" id="breakdown-cost-note"></div>
+          </div>
         </section>
 
         <section id="eco-footprint-section">
